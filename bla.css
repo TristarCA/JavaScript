@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    margin: 0 auto;
+    width: 670px;
+    padding: 0 2em 1em;
+    border: 3px solid blue;
+}
+
+h1 {
+    color: blue;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+div {
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+label {
+    display: inline-block;
+    text-align: right;
+    width: 11em;
+}
+
+input {
+    margin-left: 1em;
+    margin-bottom: .5em;
+}
+
+span {
+    color: red;
+}
+
+.butt_contain {
+    margin-top: 10px;
+}
