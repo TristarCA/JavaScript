@@ -54,6 +54,8 @@ function function2(button) {
                 $("#ocean").innerHTML += "<br><span>You sank my Cruiser!</span>"
             }
         }
+    } if (Trawler === 0 & Tug === 0 & Cruiser === 0) {
+        $("#ocean").innerHTML += "<br><span>You sank my ships :(!</span>"
     }
 }
 

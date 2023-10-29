@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    text-align: center;
+    margin-top: 10px;
+}
+
+h1 {
+    color: blue;
+    margin-bottom: .5em;
+}
+
+#buttonDiv.grid-9x9 {
+    grid-template-columns: repeat(9, 40px);
+    gap: 0;
+}
+
+br {
+    display:none;
+}
+
+#buttonDiv.grid-16x16 {
+    grid-template-columns: repeat(16, 30px); /* 16 columns, each 30px wide */
+    gap: 0; /* Remove gap between buttons */
+}
+
+/* Style for 20x24 grid */
+#buttonDiv.grid-20x24 {
+    grid-template-columns: repeat(24, 20px); /* 24 columns, each 20px wide */
+    gap: 0; /* Remove gap between buttons */
+}
+
+#buttonDiv {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    gap: 0;
+}
+
+#difficulty {
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+#timer {
+    font-size:25px;
+}
+
+button {
+    width: 35px;
+    height: 35px;
+    border-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+};
+
