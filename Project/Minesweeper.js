@@ -1,7 +1,8 @@
 const $ = selector => document.querySelector(selector);
 let root = $("#buttonDiv");
 let diff = $("#difficulty");
-let count = 0;
+var count = 0;
+document.getElementById("count").value = count
 
 bArray = new Array(81).fill(0);
 bArray.fill(1, 71);
@@ -36,6 +37,19 @@ const shuffleArray = (array) => {
     }
 };
 
+const bombCheck = (array, neighbor, bombCount) => {
+    if (array[neighbor] == 1) {
+        bombCount++
+    } else {
+        const neighborButton = document.querySelector(`[name="${neighbor}"]`);
+        if (neighborButton.innerText != " ") {
+            neighborButton.innerText = "N"
+        }
+        
+    }
+    return bombCount
+}
+
 const arrayArray = [bArray, iArray, eArray];
 arrayArray.forEach(shuffleArray);
 
@@ -55,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 else {
                     node.style.backgroundColor = 'darkseagreen'
                 }
-                
+
                 let color = "";
                 const mouseOverHandler = (evt) => {
                     color = evt.target.style.backgroundColor;
@@ -68,14 +82,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const clickHandler = (evt) => {
                     const button = evt.target;
-                    count++;
-                    $("#count").innerText = count;
-                    
-                    
+                    button.removeEventListener("click", clickHandler);
+                    count += 1;
+                    document.getElementById("count").value = count;
+
+
                     button.style.backgroundColor = "brown";
                     button.innerText = node.value;
                     button.removeEventListener("mouseout", mouseOutHandler);
                     button.removeEventListener("mouseover", mouseOverHandler);
+                    
                     if (node.value == 1) {
                         const buttons = document.querySelectorAll("button");
                         buttons.forEach((btn) => {
@@ -88,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         let name = parseInt(node.name);
                         let neighbors = [];
                         let bombCount = 0;
-                        
+
                         if (level == 1) {
                             neighbors = [name - 1, name + 1, name - 8, name - 9, name - 10, name + 8, name + 9, name + 10];
                         } else if (level == 2) {
@@ -98,18 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
 
                         for (const neighbor of neighbors) {
-                            if (array[neighbor] == 1) {
-                                bombCount++
-                            } else {
-                                const neighborButton = document.querySelector(`[name="${neighbor}"]`);
-                                neighborButton.innerText = "N"
-                            }
+                            bombCheck(array, neighbor, bombCount)
+
                         }
-                        
+
                         if (bombCount > 0) {
+                            button.style.color = 'black'
                             button.innerText = bombCount;
                         } else if (bombCount == 0) {
-                            button.innerText = " "
+                            // if bombCount == for (const neighbor of neighbors) click function?
+                            button.style.color = "brown";
                         }
                     }
                 };
