@@ -2,7 +2,7 @@ const $ = selector => document.querySelector(selector);
 let root = $("#buttonDiv");
 let diff = $("#difficulty");
 var count = 0;
-document.getElementById("count").value = count
+document.getElementById("count").value = count;
 
 bArray = new Array(81).fill(0);
 bArray.fill(1, 71);
@@ -39,15 +39,21 @@ const shuffleArray = (array) => {
 
 const bombCheck = (array, neighbor, bombCount) => {
     if (array[neighbor] == 1) {
-        bombCount++
+        bombCount+=1
     } else {
         const neighborButton = document.querySelector(`[name="${neighbor}"]`);
-        if (neighborButton.innerText != " ") {
+        if (isNaN(parseInt(neighborButton.innerText))) {
             neighborButton.innerText = "N"
+           // bombCheck(neighborButton, array, bombCount=0)
         }
         
     }
     return bombCount
+}
+
+const clearNeighbors = (neighbor) => {
+    const neighborButton = document.querySelector(`[name="${neighbor}"]`);
+    neighborButton.style.backgroundColor= "brown";
 }
 
 const arrayArray = [bArray, iArray, eArray];
@@ -85,13 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     button.removeEventListener("click", clickHandler);
                     count += 1;
                     document.getElementById("count").value = count;
-
-
+                
                     button.style.backgroundColor = "brown";
                     button.innerText = node.value;
                     button.removeEventListener("mouseout", mouseOutHandler);
                     button.removeEventListener("mouseover", mouseOverHandler);
-                    
+                
                     if (node.value == 1) {
                         const buttons = document.querySelectorAll("button");
                         buttons.forEach((btn) => {
@@ -101,29 +106,41 @@ document.addEventListener("DOMContentLoaded", () => {
                             clearInterval(timerInterval);
                         });
                     } else {
+                        let bombCount = 0;
                         let name = parseInt(node.name);
                         let neighbors = [];
-                        let bombCount = 0;
-
+                
                         if (level == 1) {
                             neighbors = [name - 1, name + 1, name - 8, name - 9, name - 10, name + 8, name + 9, name + 10];
                         } else if (level == 2) {
                             neighbors = [name - 1, name + 1, name - 15, name - 16, name - 17, name + 15, name + 16, name + 17];
                         } else if (level == 3) {
-                            neighbors = neighbors = [name - 1, name + 1, name - 23, name - 24, name - 25, name + 23, name + 24, name + 25];
+                            neighbors = [name - 1, name + 1, name - 23, name - 24, name - 25, name + 23, name + 24, name + 25];
                         }
-
+                
                         for (const neighbor of neighbors) {
-                            bombCheck(array, neighbor, bombCount)
-
+                            bombCount = bombCheck(array, neighbor, bombCount);
                         }
-
+                
                         if (bombCount > 0) {
-                            button.style.color = 'black'
+                            button.style.color = 'black';
                             button.innerText = bombCount;
                         } else if (bombCount == 0) {
-                            // if bombCount == for (const neighbor of neighbors) click function?
-                            button.style.color = "brown";
+                            neighbors.forEach((neighbor) => {
+                                const neighborButton = document.querySelector(`[name="${neighbor}"]`);
+                                if (!neighborButton.disabled) {
+                                    neighborButton.disabled = true;
+                                    neighborButton.removeEventListener("mouseout", mouseOutHandler);
+                                    neighborButton.removeEventListener("mouseover", mouseOverHandler);
+                        
+                                    // Clone and replace the button to remove listeners
+                                    const clonedButton = neighborButton.cloneNode(true);
+                                    neighborButton.parentNode.replaceChild(clonedButton, neighborButton);
+                                    clearNeighbors(neighbor);
+                                    
+                                    clickHandler({ target: clonedButton }); // Recurse on zero-count neighbors
+                                }
+                            });
                         }
                     }
                 };
