@@ -85,11 +85,11 @@ function gameOver(state) {
     let msg = '';
     let img = null;
     if (state) {
-        msg = 'WINNER! :)';
-        img = ':)' 
+        msg = '✨ WINNER! ✨';
+        img = '☢️' 
     } else {
-        msg = 'LOSER! :(';
-        img = ':('
+        msg = '💣 LOSER! 💣';
+        img = '💣'
     }
     $('.column.bomb').append($('<b>').text(img))
     setTimeout(function() {
@@ -112,6 +112,7 @@ function revealSpaces(rowPlace, columnPlace) {
                 return;
             }
             block.removeClass('hidden');
+            block.css("background-color", "#eee")
             if (bombCount > 0) {
                 block.text(bombCount);
                 count++;
