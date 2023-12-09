@@ -57,12 +57,12 @@ const action2Function = evt => {
         data = dataSource;
 
 
-        // 1. Number of characters - This includes any spaces. Just the length of the string.
+        //***************** 1. Number of characters - This includes any spaces. Just the length of the string.
         var numChars = data.length;
         report += `1. Character count is ${numChars}<br>\n`;
 
 
-        // 2. Number of words - We'll count the runs of whitespaces (one or more spaces) between words.
+        //*********************** 2. Number of words - We'll count the runs of whitespaces (one or more spaces) between words.
         // For clarity, we are assuming that we will only see spaces as whitespace. We
         // won't consider tab or cr/lf. To add them would only mean adding code that
         // is essentially identical to that for the space case.
@@ -81,7 +81,7 @@ const action2Function = evt => {
         report += `2. Word count is ${numWords}<br>\n`;
 
 
-        // 3. The character that appears most frequently
+        //***************************  3. The character that appears most frequently
         data = dataSource.trim();   // original data, trimmed
         var dataRest;        // The rest of the data that has yet to be searched
         var mostLetter = ""; // storage for the most common letter
@@ -116,14 +116,14 @@ const action2Function = evt => {
         report += `3. The first most frequent letter is '${mostLetter}' which appears ${mostCount} time(s)<br>\n`;
 
 
-        // 4. If the data is a number, display that number, otherwise state that the input is not a number
+        //********************  4. If the data is a number, display that number, otherwise state that the input is not a number
         if (isNaN (i = parseInt(dataSource)))
             report += `4. The data is not a valid number.<br>\n`;
         else
             report += `4. The data represents the number ${i}<br>\n`;
 
 
-        // 5. The data backwards (reverse order)
+        //*********************  5. The data backwards (reverse order)
         i = dataSource.length;
         data = "";
         while (i>=0){
@@ -132,7 +132,7 @@ const action2Function = evt => {
         report += `5. The data reversed is [${data}]<br>\n`;
 
 
-        // 6. The sum of the ascii codes of the data.
+        //********************  6. The sum of the ascii codes of the data.
         var sum = 0;
         for (i=0; i<dataSource.length; ++i)
             sum += dataSource.charCodeAt(i);

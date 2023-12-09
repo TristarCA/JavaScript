@@ -1,38 +1,32 @@
+/* you don't need to touch anything here. */
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: white;
-    margin: 0 auto;
-    width: 670px;
+    margin: 10px;
+    width: 600px;
+    border: 3px solid black;
     padding: 0 2em 1em;
-    border: 3px solid blue;
+    display: inline-block;
 }
-
 h1 {
     color: blue;
-    margin-bottom: 0.5em;
-    text-align: center;
 }
-
 div {
     margin-bottom: 1em;
-    text-align: center;
 }
-
 label {
     display: inline-block;
-    text-align: right;
     width: 11em;
+    text-align: right;
 }
-
 input {
     margin-left: 1em;
-    margin-bottom: .5em;
+    margin-right: 0.5em;
 }
-
 span {
     color: red;
 }
 
-.butt_contain {
-    margin-top: 10px;
+#area {
+    float: left;
 }

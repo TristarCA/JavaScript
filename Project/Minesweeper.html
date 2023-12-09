@@ -5,23 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Page Title</title>
         <link rel="stylesheet" href="Minesweeper.css">
-        <script src="Minesweeper.js" defer></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+        <script src="Minesweeper.js" defer></script>
     </head>
     <body>
-        <div class="content">
-            <h1>Minesweeper</h1>
-            <input type="text" id="timer" value ="0" disabled="true">
+        <h1>Minesweeper</h1>
+        <div id="controls">
+            <label for="timer">Timer:</label>
+            <input type="text" id="timer" value="0" disabled="true">
+            <label for="count">Revealed:</label>
             <input type="text" id="count" value="0">
             <select name="difficulty" id="difficulty">
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="expert">Expert</option>
             </select>
-
-            <div id="buttonDiv">
-                <!-- See JS file for detailed instructions. -->                
-            </div>
+        </div>
+        <div id="board">
         </div>
     </body>
+    <footer>
+        <p>Minesweeper Project by Tristan Norman</p>
+    </footer>
 </html>

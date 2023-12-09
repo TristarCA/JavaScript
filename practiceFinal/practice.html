@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Questions</title>
+
+    <style>
+        #colorChangeDiv {
+            width: 100px; /* Set the desired width */
+            height: 100px; /* Set the desired height */
+            /* You can also use min-width and min-height if you want a minimum size */
+            /* min-width: 50px; */
+            /* min-height: 50px; */
+            border: 1px solid black; /* Add a border for visibility */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Question 1 -->
+    <script>
+        const $ = selector => document.querySelector(selector);
+        let numArray = [1, 4, 6, 3, 44, 5, 77, 99];
+        let sum = 0;
+        numArray.forEach((number) => sum += number)
+        alert(sum)
+    </script>
+
+    <!-- Question 2 -->
+    <button id="myButton">Click me!</button>
+    <script>
+        let button = $(`#myButton`);
+        button.addEventListener("click", () => {
+            alert("Button clicked")
+        })
+    </script>
+
+    <!-- Question 3 -->
+    <ul id="albumList"></ul>
+    <script>
+        function getInformation(info){
+            return (
+                fetch("https://jsonplaceholder.typicode.com/todos")
+                .then (data => data.json())
+                .then (albums => {
+                    albums.forEach ((item, index, array) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = item.title;
+                        $("#albumList").appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                })
+            )
+        }
+        getInformation();
+    </script>
+
+    <!-- Question 4 -->
+    <form id="myForm">
+        <label for="textInput">Enter text:</label>
+        <input type="text" id="textInput" name="textInput">
+        <input id="submit" type="submit" value="Submit">
+    </form>
+    <script>
+        let input = $("#textInput");
+        let submit = $("#submit");
+        submit.addEventListener("click", () => {
+            alert(input.value)
+        })
+    </script>
+
+<button id="toggleColorButton">Toggle Color</button>
+<div id="colorChangeDiv"></div>
+<script>
+    let changer = $("#toggleColorButton");
+    let area = $("#colorChangeDiv");
+    changer.addEventListener("click", () =>{
+        let currentColor = area.style.backgroundColor;
+        if (currentColor === "red" || currentColor === "rgb(255, 0, 0)") {
+            area.style.backgroundColor = "blue";
+        } else {
+            area.style.backgroundColor = "red";
+        }
+    })
+</script>
+
+</body>
+</html>

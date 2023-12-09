@@ -168,63 +168,61 @@ const words = ["abandon", "ability", "able", "abortion", "about", "above", "abro
     "yours", "yourself", "youth", "zone"];
 
 $(document).ready(function () {
-    // Initialize the score
     let score = 0;
     let loses = 0;
     let countdown = 120;
-    let countdownInterval;
+    let countdownInterval; // Initializes a countdown interval
     let gameStarted = false;
 
     function shuffleArray(word) {
-        const wordArray = word.split('');
-        for (let i = wordArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = wordArray[i];
-            wordArray[i] = wordArray[j];
-            wordArray[j] = temp;
+        const wordArray = word.split(''); // Convert the word into an array of characters
+        for (let i = wordArray.length - 1; i > 0; i--) { // Iterate over the array in reverse order
+            const j = Math.floor(Math.random() * (i + 1)); // Generate a random index between 0 and i (inclusive)
+            const temp = wordArray[i]; //*
+            wordArray[i] = wordArray[j]; //* Swap the elements at indices i and j in the array
+            wordArray[j] = temp; //*
         }
-        return wordArray.join('');
+        return wordArray.join(''); // Join the shuffled array back into a string and return the result
     }
 
     function displayWord() {
-        random = Math.floor(Math.random() * words.length);
-        word = words[random];
-        // Make sure the word is not too short
-        while (word.length < 5) {
+        random = Math.floor(Math.random() * words.length); // Selects a random number between 0 and the length of the array
+        word = words[random]; 
+        while (word.length < 5) { // Ensures the word is longer than 5 letters by continuing until the word is greater than 5 letters
             random = Math.floor(Math.random() * words.length);
             word = words[random];
         }
 
-        let mixedWord = shuffleArray(word);
-        $("#scrambled-word").text(mixedWord); // Display scrambled word outside input box
-        $("#user-input").val(""); // Clear user input
-        gameStarted = true;
+        let mixedWord = shuffleArray(word); // Calls shuffleArray to mix the words letters
+        $("#scrambled-word").text(mixedWord); // Displayes the scrambled word on the html
+        $("#user-input").val(""); // Erases the input box
+        gameStarted = true; // sets gameStarted to True
     }
 
     function startCountdown() {
-        countdownInterval = setInterval(function () {
-            if (countdown > 0) {
-                countdown--;
+        countdownInterval = setInterval(function () { // Set up an interval to decrement the countdown every second
+            if (countdown > 0) { // Check if there is still time remaining
+                countdown--; // Decrement the countdown and update the display
                 displayCountdown();
             } else {
-                clearInterval(countdownInterval);
+                clearInterval(countdownInterval); // If time is up, clear the interval, show an alert, and update the score
                 alert("Time's up!");
-                loses++;
-                $("#score").text(score);
-                countdown = 120; // Reset the countdown
-                let playAgain = confirm("Would you like to play again?");
-                if (playAgain) {
+                loses++; // If the timer runs out a lose is added to the score
+                $("#score").text(score); // Displays the score to the user
+                countdown = 120; // Reset countdown to its initial value
+                let playAgain = confirm("Would you like to play again?");  // Ask the player if they want to play again
+                if (playAgain) {  // If the player wants to play again, display a new word and reset the countdown
                     displayWord();
                     resetCountdown();
-                } else { resetGame(); }
+                } else { resetGame(); } // If the player doesn't want to play again, reset the entire game
             }
-        }, 1000); // Update the countdown every 1 second (1000 milliseconds)
+        }, 1000); // Execute the function every 1000 milliseconds (1 second)
     }
 
     function displayCountdown() {
-        let minutes = Math.floor(countdown / 60);
-        let seconds = countdown % 60;
-        $("#countdown").text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+        let minutes = Math.floor(countdown / 60); // Dividing by 60 and rounding down gets you the minutes left
+        let seconds = countdown % 60; // For example 113 / 60, 60 goes into 113 once with a remainder of 53 so the seconds will be 53
+        $("#countdown").text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`); // Display the mins and seconds
     }
 
     function resetGame() {
@@ -248,18 +246,22 @@ $(document).ready(function () {
     displayCountdown();
     startCountdown();
 
+    // Attach a mouseover event handler to the element with the ID "inputDiv"
     $("#inputDiv").mouseover(function () {
+        // When the mouse is over the element, change its background color to grey
         $(this).css("background-color", "grey");
     });
 
+    // Attach a mouseout event handler to the element with the ID "inputDiv"
     $("#inputDiv").mouseout(function () {
+        // When the mouse leaves the element, change its background color back to white
         $(this).css("background-color", "white");
     });
 
     $("#quit").click(function () {
         if (gameStarted) {
-            let playAgain = confirm("Would you like to give up?");
-            if (playAgain) {
+            let playAgain = confirm("Would you like to give up?"); // Creates an alert with OK and Cancel
+            if (playAgain) { // If user selects OK to quit
                 resetGame();
                 clearInterval(countdownInterval)
                 $(".content").empty();
@@ -271,17 +273,16 @@ $(document).ready(function () {
     });
 
     $("#submit").click(function () {
-        // Check if the input word matches the original word
-        let inputWord = $("#user-input").val().toLowerCase();
+        let inputWord = $("#user-input").val().toLowerCase(); // Whatever the user has entered into the input box, to lowercase letters
         if (inputWord == word) {
             alert("CORRECT!");
             score++;
             $("#score").text(score);
             let playAgain = confirm("Would you like to play again?");
-            if (playAgain) {
+            if (playAgain) { // User selects OK, a new word is displayed and the time is reset
                 displayWord();
                 resetCountdown();
-            } else { resetGame(); }
+            } else { resetGame(); } // User selects cancel and the game is reset
 
         }
         else {
@@ -296,9 +297,8 @@ $(document).ready(function () {
         }
     });
     
-    $("#user-input").keypress(function (e) {
-        // Check if the input word matches the original word
-        if (e.which == 13) {
+    $("#user-input").keypress(function (e) { // creates the same function but on a key press
+        if (e.which == 13) { // If the user clicks enter
             let inputWord = $("#user-input").val().toLowerCase();
             if (inputWord == word) {
                 alert("CORRECT!");

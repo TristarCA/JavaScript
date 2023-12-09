@@ -14,6 +14,11 @@ body {
     display: inline-block;
 }
 
+label {
+    font-size: xx-large;
+    color: orange;
+}
+
 
 .row {
     font-size: 0px;
@@ -22,14 +27,14 @@ body {
 
 .column {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: #eee;
     border-right: 1px solid white;
     border-bottom: 1px solid white;
     vertical-align: top;
     font-size: 20px;
-    line-height: 50px;
+    line-height: 40px;
 }
 
 .row:nth-child(odd) .column:nth-child(odd) {
@@ -74,6 +79,7 @@ body {
 h1 {
     color: blue;
     margin-bottom: .5em;
+    text-decoration: underline;
 }
 
 #difficulty {
@@ -83,5 +89,17 @@ h1 {
 
 #timer, #count {
     font-size: 25px;
+}
+
+#difficulty.beginner {
+    color: green;
+}
+
+#difficulty.intermediate {
+    color: orange;
+}
+
+#difficulty.expert {
+    color: red;
 }
 
