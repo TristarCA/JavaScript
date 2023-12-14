@@ -1,4 +1,3 @@
-
 // Function to fetch user data and set up event listeners
 async function getData() {
     try {

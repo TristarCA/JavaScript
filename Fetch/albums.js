@@ -11,7 +11,7 @@ $(document).ready(function () {
         .then(response => response.json())
         // For this line the users could be named anything, its just the JSON object returned by the previous line
         .then(users => {
-            // Loop through each user and create an option for the userSelect dropdown
+            // Loop through each user(object in returned array) and create an option for the userSelect dropdown
             users.forEach(user => {
                 // Adds each user to the Select on the html
                 const option = document.createElement('option');
