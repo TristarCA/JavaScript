@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         image.alt = link.title;
 
         // Add image to the array 
-        images[images.length] = image;
+        images.push(image)
     }
 
     // Attach start and pause event handlers
