@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>CNA Rail System</h1>
+    <form id="BoxCarForm">
+        <label for="BoxCarID">Box Car ID</label>
+        <input id="BoxCarID" type="text" readonly value="BX500">
+        <br>
+        <label for="EmptyWeight">Empty Weight</label>
+        <input id="EmptyWeight" type="text" readonly value="15000">
+        <br>
+        <label for="TotalWeight">Total Weight</label>
+        <input id="TotalWeight" type="text" readonly value="0">
+        <br>
+        <button disabled>Process Box Car</button>
+        <button disabled>Reset Form</button>
+    </form>
+    <div id="CargoProcessingDiv">
+    <form id="CargoProcessingForm" action="">
+        <label for="TrasportID">Trasport ID</label>
+        <input type="text" id="TrasportID">
+        <br>
+        <label for="Description">Description</label>
+        <input type="text" id="Description">
+        <br>
+        <label for="CargoWeight">Cargo Weight</label>
+        <input type="text" id="CargoWeight">
+        <br>
+        <button id="NewCargo">Process Cargo</button>
+        <button type="reset" id="ResetCargo">Reset Form</button>
+    </form>
+       <script src="process_cargo.js"></script> 
+</div>
+
+</body>
+
+</html>
