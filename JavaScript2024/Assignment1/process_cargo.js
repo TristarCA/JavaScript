@@ -4,89 +4,135 @@ const $ = selector => document.querySelector(selector);
 
 document.addEventListener("DOMContentLoaded", () => {
     const boxCarID = $("#BoxCarID").value;
-    const emptyWeight = $("#EmptyWeight");
-    const totalWeightInput = $("#TotalWeight");
+    const emptyWeight = parseFloat($("#EmptyWeight").value);
+    const maxWeight = parseFloat($("#MaxWeight").value);
+    const currentWeightInput = $("#CurrentWeight");
     const transportID = $("#TransportID");
     const description = $("#Description");
     const cargoWeight = $("#CargoWeight");
     const newCargo = $("#NewCargo");
     
-    // Create the Cargo Box Car Manifest label
-    const cargoBoxCarManifestLabel = document.createElement("label");
-    cargoBoxCarManifestLabel.textContent = `Cargo Box Car Manifest for Box Car ${boxCarID}`;
-    cargoBoxCarManifestLabel.id = "cargoBoxManifestLabel";
+    const cargoStatusTable = document.querySelector(".status table");
+    const manifestTable = document.querySelector(".manifest table");
+    
+    const cargoStatusNoneRow = document.createElement("tr");
+    const cargoStatusNoneCell = document.createElement("td");
+    cargoStatusNoneCell.colSpan = 4;
+    cargoStatusNoneCell.textContent = "None";
+    cargoStatusNoneRow.appendChild(cargoStatusNoneCell);
+    cargoStatusTable.appendChild(cargoStatusNoneRow);
 
-    // Create the table element and its headers
-    const cargoTable = document.createElement("table");
-    const headerRow = document.createElement("tr");
-    const headers = ["Transport ID", "Description  ", "Weight"];
+    const manifestNoneRow = document.createElement("tr");
+    const manifestNoneCell = document.createElement("td");
+    manifestNoneCell.colSpan = 3;
+    manifestNoneCell.textContent = "None";
+    manifestNoneRow.appendChild(manifestNoneCell);
+    manifestTable.appendChild(manifestNoneRow);
+    const manifestHeader = document.getElementById("manifestHeader");
+    const newText = document.createTextNode('Manifest:  ' + boxCarID);
+    manifestHeader.textContent = '';
+    manifestHeader.appendChild(newText);
 
-    headers.forEach(headerText => {
-        const headerCell = document.createElement("th");
-        headerCell.textContent = headerText;
-        headerRow.appendChild(headerCell);
+    const totalWeightRow = document.createElement("tr");
+    totalWeightRow.id = "totalWeightRow";
+    const totalWeightLabelCell = document.createElement("td");
+    totalWeightLabelCell.textContent = "Total Weight:";
+    totalWeightRow.appendChild(totalWeightLabelCell);
+    const totalWeightCell = document.createElement("td");
+    totalWeightRow.appendChild(totalWeightCell);
+    manifestTable.appendChild(totalWeightRow);
+
+    newCargo.addEventListener("click", event => {
+        event.preventDefault();
+
+        const transportIDValue = transportID.value;
+        const descriptionValue = description.value;
+        const cargoWeightValue = parseFloat(cargoWeight.value);
+        const maxCargoWeight = maxWeight - emptyWeight;
+
+        if (!transportIDValue || !descriptionValue || isNaN(cargoWeightValue)) {
+            alert("All fields must contain valid data. Please check your inputs!");
+            return;
+        }
+
+        if (cargoWeightValue <= 0 || cargoWeightValue > maxCargoWeight) {
+            if (cargoWeightValue <= 0) {
+                alert("Cargo weight must be a positive number that is larger than 0.");
+            } else {
+                alert(`Cargo weight exceeds the maximum allowed weight. The max weight allowed is ${maxCargoWeight}.`);
+            }
+            return;
+        }
+
+        const currentTotalWeight = parseFloat(currentWeightInput.value);
+        const newTotalWeight = currentTotalWeight + cargoWeightValue;
+
+        if (newTotalWeight > maxWeight) {
+            const newRow = document.createElement("tr");
+            const transportIDCell = document.createElement("td");
+            transportIDCell.textContent = transportIDValue;
+            newRow.appendChild(transportIDCell);
+            const descriptionCell = document.createElement("td");
+            descriptionCell.textContent = descriptionValue;
+            newRow.appendChild(descriptionCell);
+            const cargoWeightCell = document.createElement("td");
+            cargoWeightCell.textContent = cargoWeightValue;
+            newRow.appendChild(cargoWeightCell);
+            const statusCell = document.createElement("td");
+            statusCell.textContent = "Warehouse";
+            newRow.appendChild(statusCell);
+            cargoStatusTable.appendChild(newRow);
+            alert(`Total weight exceeds the maximum allowable weight of ${maxWeight} lbs. Current total weight: ${currentTotalWeight} lbs. Sending Cargo to Warehouse`);
+            return;
+        }
+
+        const newRow = document.createElement("tr");
+
+        const transportIDCell = document.createElement("td");
+        transportIDCell.textContent = transportIDValue;
+        newRow.appendChild(transportIDCell);
+
+        const descriptionCell = document.createElement("td");
+        descriptionCell.textContent = descriptionValue;
+        newRow.appendChild(descriptionCell);
+
+        const cargoWeightCell = document.createElement("td");
+        cargoWeightCell.textContent = cargoWeightValue;
+        newRow.appendChild(cargoWeightCell);
+
+        const statusCell = document.createElement("td");
+        statusCell.textContent = `${boxCarID}`;
+        newRow.appendChild(statusCell);
+
+        if (cargoStatusNoneRow.parentElement) {
+            cargoStatusNoneRow.parentElement.removeChild(cargoStatusNoneRow);
+        }
+        cargoStatusTable.appendChild(newRow);
+
+        const manifestRow = document.createElement("tr");
+
+        const manifestTransportIDCell = document.createElement("td");
+        manifestTransportIDCell.textContent = transportIDValue;
+        manifestRow.appendChild(manifestTransportIDCell);
+
+        const manifestDescriptionCell = document.createElement("td");
+        manifestDescriptionCell.textContent = descriptionValue;
+        manifestRow.appendChild(manifestDescriptionCell);
+
+        const manifestCargoWeightCell = document.createElement("td");
+        manifestCargoWeightCell.textContent = cargoWeightValue;
+        manifestRow.appendChild(manifestCargoWeightCell);
+
+        if (manifestNoneRow.parentElement) {
+            manifestNoneRow.parentElement.removeChild(manifestNoneRow);
+        }
+        manifestTable.insertBefore(manifestRow, totalWeightRow);
+        currentWeightInput.value = newTotalWeight;
+
+        totalWeightCell.textContent = newTotalWeight - 15000;
+
+        transportID.value = "";
+        description.value = "";
+        cargoWeight.value = "";
     });
-
-    cargoTable.appendChild(headerRow);
-
-   // Create the footer row for total weight
-   const footerRow = document.createElement("tr");
-   const footerLabelCell = document.createElement("td");
-   footerLabelCell.colSpan = 2;
-   footerLabelCell.textContent = "Total Weight";
-   const totalWeightCell = document.createElement("td");
-   totalWeightCell.id = "totalWeightCell";
-   totalWeightCell.textContent = "0";
-
-   footerRow.appendChild(footerLabelCell);
-   footerRow.appendChild(totalWeightCell);
-
-   cargoTable.appendChild(footerRow);
-
-   // Append the label and table to the document body
-   document.body.appendChild(cargoBoxCarManifestLabel);
-   document.body.appendChild(cargoTable);
-
-   newCargo.addEventListener("click", event => {
-       // Prevent default form submission behavior
-       event.preventDefault();
-
-       // Get the values from the input fields
-       const transportIDValue = transportID.value;
-       const descriptionValue = description.value;
-       const cargoWeightValue = parseFloat(cargoWeight.value);
-
-       // Create a new row for the table
-       const newRow = document.createElement("tr");
-
-       // Populate the new row with the values
-       const transportIDCell = document.createElement("td");
-       transportIDCell.textContent = transportIDValue;
-       newRow.appendChild(transportIDCell);
-
-       const descriptionCell = document.createElement("td");
-       descriptionCell.textContent = descriptionValue;
-       newRow.appendChild(descriptionCell);
-
-       const cargoWeightCell = document.createElement("td");
-       cargoWeightCell.textContent = cargoWeightValue;
-       newRow.appendChild(cargoWeightCell);
-
-       // Append the new row to the table
-       // Insert the new row before the footer row
-       cargoTable.insertBefore(newRow, footerRow);
-
-       // Update the Total Cargo Weight in the Box Car form
-       const currentTotalWeight = parseFloat(totalWeightInput.value);
-       const newTotalWeight = currentTotalWeight + cargoWeightValue;
-       totalWeightInput.value = newTotalWeight;
-
-       // Update the total weight cell in the table footer
-       totalWeightCell.textContent = newTotalWeight;
-
-       // Clear the input fields after adding cargo
-       transportID.value = "";
-       description.value = "";
-       cargoWeight.value = "";
-   });
 });
