@@ -12,3 +12,8 @@ label {
 button {
     margin-left: 40px;
 }
+#cargoBoxManifestLabel {
+    font-weight: bold;
+    display:inline;
+    font-size:xx-large;
+}
