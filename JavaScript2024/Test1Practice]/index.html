@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 1 Practice</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div style="border: 2px solid blue; padding: 20px;">
+        <h2>HEADINGS ...</h2>
+        <div>
+            <span class="label">Label</span>
+            <input type="text" class="input-field" id="input1">
+            <span class="error" id="error1"></span>
+        </div>
+        <div>
+            <span class="label">Label</span>
+            <input type="text" class="input-field" id="input2">
+            <span class="error" id="error2"></span>
+        </div>
+        <div>
+            <span class="label">Label</span>
+            <input type="text" class="input-field" id="input3" readonly="true" disabled>
+            <span class="error" id="error3"></span>
+        </div>
+        <div class="buttons">
+            <button id="process">Process</button>
+            <button type="reset" id="reset">Clear</button>
+        </div>
+        <div>
+            <textarea class="output" id="output"></textarea>
+        </div>
+    </div>
+    <script src="function.js"></script>
+</body>
+
+</html>
