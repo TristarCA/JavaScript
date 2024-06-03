@@ -1,0 +1,17 @@
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.blue {
+  cursor: pointer;
+  color: blue;
+}
+.orange {
+  color: orange;
+}
+.underline {
+  text-decoration-line: underline;
+}
+

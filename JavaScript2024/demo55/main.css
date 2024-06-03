@@ -1,0 +1,30 @@
+h3 {
+  padding: .25em 0 .25em 25px;
+  cursor: pointer;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.blue {
+  cursor: pointer;
+  color: blue;
+}
+.orange {
+  color: orange;
+}
+.underline {
+  text-decoration-line: underline;
+}
+.plus {
+  background: url(images/plus.png) no-repeat left center;
+}
+.minus {
+  background: url(images/minus.png) no-repeat left center;
+}
+.hide {
+  display: none;
+}
+
