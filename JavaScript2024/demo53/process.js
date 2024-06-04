@@ -24,16 +24,18 @@ const clickCounter = evt1 => {
 }
 
 const processClick = evt1 => {
+  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
   const currentElement = evt1.currentTarget;
   currentElement.classList.toggle("blue");
   const divElement = currentElement.nextElementSibling;
   let child = divElement.firstElementChild;
+  let i = 0;
 
   while (child.nextElementSibling != null) {
-    child.classList.toggle("orange");
+    child.classList.toggle(colors[i])
     child = child.nextElementSibling;
-  } 
-  child.classList.toggle("orange");
+    i++
+  }
 }
 
 const addDocumentListeners = () => {

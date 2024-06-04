@@ -30,7 +30,7 @@ const processActivity2 = evt1 => {
   const main = $("main");
 
   const hambergerText =main.childNodes[3].
-                     childNodes[3].textContent;
+  childNodes[3].textContent;
   console.log(hambergerText);
   main.childNodes[3].childNodes[3].textContent = "Cheeseburger";
 

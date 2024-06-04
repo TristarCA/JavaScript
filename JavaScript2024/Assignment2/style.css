@@ -17,11 +17,3 @@ button {
     display:inline;
     font-size:xx-large;
 }
-
-footer {
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 10px 0;
-    position: relative;
-    width: 100%;
-}
