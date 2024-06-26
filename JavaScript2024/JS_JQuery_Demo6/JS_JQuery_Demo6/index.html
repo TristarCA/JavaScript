@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CNA Factory Order V5</title>
+    <link rel="stylesheet" href="order.css">
+</head>
+
+<body>
+    <main>
+        <h1>Order Form v5</h1>
+        <form action="factory_server.html" method="get" name="order_form" id="order_form">
+            <fieldset>
+                <legend>Item Information</legend>
+
+                <div>
+                    <label for="item_code_id">Item Code:</label>
+                    <input type="text" id="item_code_id" name="item_code" placeholder="Exactly 4 characters">
+                    <span>*</span>
+                    <h3></h3>
+                </div>
+                <div>
+                    <label>Item Color:</label>
+                    <br>
+                    <input type="radio" name="color_code" value="Green" checked>Green
+                    <br>
+                    <input type="radio" name="color_code" value="Red">Red
+                    <br>
+                    <input type="radio" name="color_code" value="Blue">Blue
+                </div>
+
+            </fieldset>
+            <fieldset id="buttons">
+                <legend>Submit Your Order</legend>
+                <div>
+                    <label>&nbsp;</label>
+                    <input type="submit" id="submit" name="submit" value="Submit">
+                    <input type="reset" id="reset" name="reset" value="Reset">
+                </div>
+            </fieldset>
+        </form>
+    </main>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="order.js"></script>
+</body>
+
+</html>
