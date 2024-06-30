@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+#container {
+    width: 300px;
+    margin: auto;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.green-line {
+    height: 3px;
+    background-color: green;
+    margin: 10px 0;
+}
+
+#radio-buttons {
+    margin: 10px 0;
+}
+
+#data-error, #confirm-error {
+    color: red; /* Set text color to red */
+    font-size: 0.9em; /* Set a suitable font size */
+    display: block; /* Make the span take its own line */
+    margin-top: 5px; /* Add some space above the span */
+}

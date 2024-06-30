@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Entry Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <p>Enter each day's data and press "y" to accept data</p>
+        <hr class="green-line">
+        <input type="text" id="day-counter" disabled value="1">
+        <input type="text" id="cumulative-data" disabled value="0">
+        <input type="text" id="average-data" disabled value="0">
+        <hr class="green-line">
+        <input type="text" id="data-entry" value="0">
+        <span id="data-error" class="error-message"></span>
+        <input type="text" id="confirm-entry" disabled value="0">
+        <div id="radio-buttons">
+            <input type="radio" name="data-qualify" id="qualify-yes" value="Win"> <label for="qualify-yes">Yes</label>
+            <input type="radio" name="data-qualify" id="qualify-no" value="Lose"> <label for="qualify-no">No</label>
+        </div>
+        <hr class="green-line">
+        <p>Enter "y" to Process daily input and continue to Next Day</p>
+        <input type="text" id="confirm-next" placeholder="Type 'y' to confirm next day">
+        <span id="confirm-error"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
