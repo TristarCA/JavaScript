@@ -14,15 +14,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function validateData(input) {
         let number = parseFloat(input)
+        let parent = $('#confirm-next');
+        let p = parent.previousSibling.previousSibling;
         if (input.trim() === '') {
+            $('#confirm-next').hidden = true;
+            p.hidden = true;
             return 'Please enter a number'
         } else if (number < 0) {
+            $('#confirm-next').hidden = true;
+            p.hidden = true;
             return 'Input cannot be a negative number'
         } else if (isNaN(input)) {
+            $('#confirm-next').hidden = true;
+            p.hidden = true;
             return 'Input must be a non-negative number'
         } else if (number > 50) {
+            $('#confirm-next').hidden = true;
+            p.hidden = true;
             return 'Input must be between 0 and 50'
-        } return null;
+        } 
+        $('#confirm-next').hidden = false;
+        p.hidden = false;
+        return null;
     }
 
     $('#confirm-next').addEventListener('input', function(e) {
@@ -64,7 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
         $('#day-counter').value = dayCount;
         updateDisplay();
         resetInputs();
-        updateList();
+        if (dataHistory.length > 4) {
+            updateList();
+        }
         
     }
 
@@ -80,17 +95,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateList() {
-        if (!$('#results-list')) { // Check if the UL element exists
-            let ul = document.createElement('ul');
-            ul.id = 'results-list';
-            document.body.appendChild(ul); // Append the UL to the body or a specific container
-        }
         let resultsList = $('#results-list');
-        resultsList.innerHTML = ''; // Clear existing list
+        if (!resultsList) {
+            resultsList = document.createElement('ul');
+            resultsList.id = 'results-list';
+            $('#container').appendChild(resultsList);
+        } else {
+            resultsList.innerHTML = ''; // Clear existing list
+        }
+        dataHistory.reverse()
         dataHistory.forEach(entry => {
             let li = document.createElement('li');
             li.textContent = `Original: ${entry.Original}, Processed: ${entry.Checked}`;
             resultsList.appendChild(li);
         });
+
+        $('#data-entry').style.display = 'none';
+        $('#data-error').style.display = 'none';
+        $('#confirm-entry').style.display = 'none';
+        $('#radio-buttons').style.display = 'none';
+        $('#confirm-next').style.display = 'none';
+        let parent = $('#confirm-next');
+        let p = parent.previousSibling.previousSibling;
+        p.hidden = true;
     }
 })
