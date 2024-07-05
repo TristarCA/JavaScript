@@ -1,0 +1,108 @@
+#divA {
+    display: grid;
+    width: 100%; /* Ensures the div takes full width of its container */
+}
+
+.header-row, .button-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Creates 5 columns of equal width */
+    text-align: center; /* Centers the text horizontally */
+}
+
+h4 {
+    margin: 0;
+    padding: 10px; /* Adds padding inside each header for better visibility */
+    border-bottom: 2px solid black; /* Adds a bottom border to each header */
+}
+
+input.radio {
+    justify-self: center; /* Centers radio buttons in their grid cell */
+    margin-top: 10px; /* Adds margin on top for spacing between rows */
+}
+
+#divB {
+    display: grid;
+    grid-template-columns: 150px auto; /* Provides specific width for labels and remaining space for inputs */
+    gap: 10px 20px; /* Vertical and horizontal gaps between grid items */
+    max-width: 600px; /* Maximum width of the form */
+    margin: auto; /* Center align the form */
+    padding: 20px; /* Padding around the form */
+}
+
+#divB label {
+    display: block; /* Ensure labels appear above inputs */
+    margin-bottom: 5px; /* Space below each label */
+}
+
+#divB input {
+    display: block; /* Ensure inputs are on their own line */
+    width: calc(100% - 20px); /* Adjust width to account for padding/margins */
+    margin-bottom: 20px; /* Space below each input */
+}
+
+#divC {
+    display: grid;
+    grid-template-columns: 1fr; /* Full width for simplicity */
+    gap: 20px; /* Spacing between elements within the div */
+    max-width: 600px; /* Maximum width of the content */
+    margin: auto; /* Center align the div */
+    padding: 20px; /* Padding around the div */
+}
+
+#divC p, #divC label {
+    text-align: center; /* Centers the text of p and label */
+}
+
+#display-all-boxcars {
+    width: 100%; /* Full width to match the parent's width */
+    border-collapse: collapse; /* Collapse borders for a clean look */
+    margin-top: 20px; /* Spacing from the label */
+}
+
+#display-all-boxcars th, #display-all-boxcars td {
+    border: 1px solid black; /* Border for cells */
+    padding: 10px; /* Padding inside cells */
+    text-align: center; /* Center text in cells */
+}
+
+#display-all-boxcars thead th {
+    background-color: #f3f3f3; /* Light background for header */
+    border-bottom: 2px solid black; /* Stronger line under headers */
+}
+
+#display-all-boxcars tfoot td {
+    font-weight: bold; /* Make footer text bold */
+    text-align: right; /* Align footer text to the right */
+    padding-right: 10px; /* Right padding for footer text */
+}
+
+#button-div {
+    display: flex; /* Using flexbox to align buttons */
+    justify-content: space-between; /* Distributes space between buttons */
+    padding: 10px 0; /* Adds vertical padding for better spacing */
+}
+
+#button-div input[type="button"] {
+    flex-grow: 1; /* Each button will grow equally */
+    margin: 0 10px; /* Adjust horizontal margins for button spacing */
+}
+
+.freight-info {
+    display: flex;
+    flex-direction: column;  /* Stack children vertically */
+    padding: 10px;           /* Padding for aesthetics */
+    margin-top: 10px;        /* Space after the button */
+    border: 1px solid #ccc;  /* Optional border */
+    background-color: #f9f9f9; /* Light background */
+    max-width: 600px; /* Controls the max width to prevent stretching */
+}
+
+.freight-info div {
+    margin-bottom: 10px;    /* Space between input groups */
+}
+
+.freight-info label {
+    margin-right: 5px;      /* Space between label and input */
+    min-width: 120px;       /* Ensure labels align nicely */
+    display: inline-block;  /* Align label with input */
+}

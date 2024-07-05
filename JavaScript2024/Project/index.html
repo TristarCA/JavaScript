@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Entry Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="divA">
+        <div class="header-row">
+            <h4>Create Boxcar</h4>
+            <h4>Add Freight</h4>
+            <h4>Boxcar Data</h4>
+            <h4>Warehouse Data</h4>
+            <h4>All Freight Status</h4>
+        </div>
+        <div class="button-row">
+            <label><input type="radio" name="operation" class="radio" id="create-boxcar"> Create Boxcar</label>
+            <label><input type="radio" name="operation" class="radio" id="add-freight"> Add Freight</label>
+            <label><input type="radio" name="operation" class="radio" id="boxcar-data"> Boxcar Data</label>
+            <label><input type="radio" name="operation" class="radio" id="warehouse-data"> Warehouse Data</label>
+            <label><input type="radio" name="operation" class="radio" id="all-freight-status"> All Freight Status</label>
+        </div>
+    </div>
+    
+    <div id="divB">
+        <h2>CNA-Rolling Stock-Create New Boxcar</h2>
+        <label>Boxcar ID: <input type="text" id="boxcar-id" name="boxcar-id"></label>
+        <label>TARE Weight: <input type="text" id="tare-weight" name="tare-weight"></label>
+        <label>Max Gross Weight: <input type="text" id="max-gross-weight" name="max-gross-weight"></label>
+        <label>Cargo Weight: <input type="text" id="cargo-weight" name="cargo-weight" disabled></label>
+        <label>Gross Weight: <input type="text" id="gross-weight" name="gross-weight" disabled></label>
+        
+        <div id="button-div">
+            <input type="button" value="Process Box Car" id="process-box-car">
+            <input type="button" value="Reset Form" id="reset-form">
+            <input type="button" value="Return to Main Page" class="return-to-main">
+        </div>
+    </div>
+    
+    
+    <div id="divC">
+        <p>Display All Box Cars</p>
+        <label for="display-table">CNA - Rolling Stock Report</label>
+        <table id="display-all-boxcars">
+            <thead>
+                <tr>
+                    <th>Box Car ID</th>
+                    <th>TARE</th>
+                    <th>Max Gross</th>
+                    <th>Cargo</th>
+                    <th>Gross</th>
+                </tr>
+            </thead>
+                <!-- Area where body of table will display -->
+            <tfoot>
+                <tr>
+                    <td colspan="4">Total Cargo Weight:</td>
+                    <td id="total-weight">0</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div id="button-div">
+            <input type="button" value="Return to Create Box Car" id="return-to-DivB">
+            <input type="button" value="Return to Main Page" class="return-to-main">
+        </div>
+    </div>
+    
+    <div id="divD">
+        <h1>Box Car List</h1>
+        <div id="box-car-list">
+            <h2>Box Car ID</h2>
+            <ul name="select-box-car" id="select-box-car">
+
+            </ul>
+        </div>
+
+        <input type="button" value="Return to Main Page" class="return-to-main">
+    </div>
+    
+    <div id="divE">
+        <table id="box-car-manifest">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>    
+            <tfoot>
+                <tr>
+                    <td colspan="2">Total Cargo Weight:</td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" value="Return to Create Freight Entry">
+        <input type="button" value="Return to Main Page" class="return-to-main">
+    </div>
+    
+    <div id="divF">
+        <h1>CNA - Warehouse Manifest - Station AAAA</h1>
+        <table id="warehouse-manifest">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>    
+            <tfoot>
+                <tr>
+                    <td colspan="2">Total Cargo Weight:</td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" value="Return to Main Page" class="return-to-main">
+    </div>
+    
+    <div id="divG">
+        <h1>CNA - Complete Freight Status</h1>
+        <table id="all-freight-table">
+            <thead>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Status</th>
+                </tr>
+            </thead>    
+            <tfoot>
+                <tr>
+                    <td colspan="2">Total Cargo Weight:</td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" value="Return to Main Page" class="return-to-main">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
