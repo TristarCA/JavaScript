@@ -52,7 +52,6 @@
                     <th>Gross</th>
                 </tr>
             </thead>
-                <!-- Area where body of table will display -->
             <tfoot>
                 <tr>
                     <td colspan="4">Total Cargo Weight:</td>
@@ -70,30 +69,54 @@
         <h1>Box Car List</h1>
         <div id="box-car-list">
             <h2>Box Car ID</h2>
-            <ul name="select-box-car" id="select-box-car">
-
-            </ul>
+            <ul name="select-box-car" id="select-box-car"></ul>
         </div>
-
+        
+        <div id="freight-info" class="freight-info">
+            <label for="selected-boxcar-id">Box Car Selected:</label>
+            <input id="selected-boxcar-id" disabled>
+            <span id="selected-boxcar-id-error" class="error-message"></span>
+    
+            <label for="selected-transport-id">Transport ID:</label>
+            <input id="selected-transport-id">
+            <span id="selected-transport-id-error" class="error-message"></span>
+    
+            <label for="selected-description">Description:</label>
+            <input id="selected-description">
+            <span id="selected-description-error" class="error-message"></span>
+    
+            <label for="selected-cargo-weight">Cargo Weight:</label>
+            <input id="selected-cargo-weight">
+            <span id="selected-cargo-weight-error" class="error-message"></span>
+    
+            <div style="display: flex; justify-content: space-evenly;">
+                <button id="process-freight" class="freight-button">Process Cargo</button>
+                <button id="reset-freight" class="freight-button">Reset Form</button>
+            </div>
+        </div>
+    
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
     
+    
     <div id="divE">
-        <table id="box-car-manifest">
+        <table id="boxcar-manifest">
             <thead>
                 <tr>
                     <th>Transport ID</th>
                     <th>Description</th>
                     <th>Weight</th>
                 </tr>
-            </thead>    
+            </thead>
+            <tbody></tbody>    
             <tfoot>
                 <tr>
                     <td colspan="2">Total Cargo Weight:</td>
+                    <td id="total-freight-weight">0</td>
                 </tr>
             </tfoot>
         </table>
-        <input type="button" value="Return to Create Freight Entry">
+        <input type="button" value="Return to Create Freight Entry" id="return-to-divD">
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
     
@@ -106,13 +129,16 @@
                     <th>Description</th>
                     <th>Weight</th>
                 </tr>
-            </thead>    
+            </thead> 
+            <tbody></tbody>   
             <tfoot>
                 <tr>
                     <td colspan="2">Total Cargo Weight:</td>
+                    <td id="total-warehouse-weight">0</td>
                 </tr>
             </tfoot>
         </table>
+        <input type="button" value="Return to Add Freight" id="return-to-divD">
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
     
@@ -126,15 +152,20 @@
                     <th>Weight</th>
                     <th>Status</th>
                 </tr>
-            </thead>    
+            </thead>
+            <tbody id="freight-table-body">
+                <!-- Individual freight entries will be added here -->
+            </tbody>
             <tfoot>
                 <tr>
                     <td colspan="2">Total Cargo Weight:</td>
+                    <td id="total-cargo-weight">0</td>
                 </tr>
             </tfoot>
         </table>
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
+    
 
     <script src="script.js"></script>
 </body>

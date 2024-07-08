@@ -106,3 +106,9 @@ input.radio {
     min-width: 120px;       /* Ensure labels align nicely */
     display: inline-block;  /* Align label with input */
 }
+
+.freight-button {
+    flex: 1; /* Makes each button flex to fill the space */
+    margin: 5px; /* Optional margin for spacing between buttons */
+    flex-direction: row;
+}
