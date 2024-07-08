@@ -75,19 +75,15 @@
         <div id="freight-info" class="freight-info">
             <label for="selected-boxcar-id">Box Car Selected:</label>
             <input id="selected-boxcar-id" disabled>
-            <span id="selected-boxcar-id-error" class="error-message"></span>
     
             <label for="selected-transport-id">Transport ID:</label>
             <input id="selected-transport-id">
-            <span id="selected-transport-id-error" class="error-message"></span>
     
             <label for="selected-description">Description:</label>
             <input id="selected-description">
-            <span id="selected-description-error" class="error-message"></span>
     
             <label for="selected-cargo-weight">Cargo Weight:</label>
             <input id="selected-cargo-weight">
-            <span id="selected-cargo-weight-error" class="error-message"></span>
     
             <div style="display: flex; justify-content: space-evenly;">
                 <button id="process-freight" class="freight-button">Process Cargo</button>
@@ -116,7 +112,7 @@
                 </tr>
             </tfoot>
         </table>
-        <input type="button" value="Return to Create Freight Entry" id="return-to-divD">
+        <input type="button" value="Return to Create Freight Entry" class="return-to-divD">
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
     
@@ -138,7 +134,7 @@
                 </tr>
             </tfoot>
         </table>
-        <input type="button" value="Return to Add Freight" id="return-to-divD">
+        <input type="button" value="Return to Add Freight" class="return-to-divD">
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
     
@@ -154,7 +150,6 @@
                 </tr>
             </thead>
             <tbody id="freight-table-body">
-                <!-- Individual freight entries will be added here -->
             </tbody>
             <tfoot>
                 <tr>

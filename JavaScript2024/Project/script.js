@@ -12,10 +12,13 @@ function createErrorMessage(inputElement) {
 const boxcarIdError = createErrorMessage($('#boxcar-id'));
 const tareWeightError = createErrorMessage($('#tare-weight'));
 const maxGrossWeightError = createErrorMessage($('#max-gross-weight'));
+const selectedBoxcarIdError = createErrorMessage($('#selected-boxcar-id'));
+const selectedTransportIdError = createErrorMessage($('#selected-transport-id'));
+const selectedDescriptionError = createErrorMessage($('#selected-description'));
+const selectedCargoWeightError = createErrorMessage($('#selected-cargo-weight'));
 
 $('#cargo-weight').value = '0';
 
-// Validation functions
 function validateBoxcarId() {
     const boxcarIdInput = $('#boxcar-id').value;
     const regex = /^BX\d{3}$/;
@@ -31,7 +34,6 @@ function validateBoxcarId() {
         showError(boxcarIdError, 'This Boxcar ID already exists in the system');
         return;
     }
-
     hideError(boxcarIdError);
 }
 
@@ -55,24 +57,20 @@ function validateMaxGrossWeight() {
 
     if ($('#max-gross-weight').value.trim() === '') {
         showError(maxGrossWeightError, 'Max Gross Weight cannot be empty');
-        resetGrossWeight();
+        $('#gross-weight').value = '0';
     } else if (isNaN(maxGrossWeight)) {
         showError(maxGrossWeightError, 'Max Gross Weight must be a valid number');
-        resetGrossWeight();
+        $('#gross-weight').value = '0';
     } else if (maxGrossWeight < 0 || maxGrossWeight > 200000) {
         showError(maxGrossWeightError, 'Max Gross Weight must be in range 0 to 200,000');
-        resetGrossWeight();
+        $('#gross-weight').value = '0';
     } else if (maxGrossWeight <= tareWeight) {
         showError(maxGrossWeightError, 'Max Gross Weight must be higher than TARE Weight');
-        resetGrossWeight();
+        $('#gross-weight').value = '0';
     } else {
         hideError(maxGrossWeightError);
         calculateGrossWeight(maxGrossWeight, tareWeight);
     }
-}
-
-function resetGrossWeight() {
-    $('#gross-weight').value = '0';
 }
 
 function calculateGrossWeight(maxGrossWeight, tareWeight) {
@@ -92,9 +90,10 @@ function hideError(errorElement) {
     errorElement.style.display = 'none';
 }
 
-validateBoxcarId();
-validateMaxGrossWeight();
-validateTareWeight();
+/* TEST TO ENSURE JUST USING resetForm IS ACTUALLY WORKING ON PAGE LOAD
+    validateMaxGrossWeight();
+    validateBoxcarId();
+    validateTareWeight(); */
 
 function resetForm() {
     $('#boxcar-id').value = '';
@@ -105,9 +104,9 @@ function resetForm() {
     validateTareWeight();
 }
 
+resetForm();
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initially hide all divs except divA and divE
     ['#divB', '#divC', '#divD', '#divE', '#divF', '#divG'].forEach(id => {
         const div = $(id);
         if (div) {
@@ -115,17 +114,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Attach change event listeners to radio buttons
-    $$('input[type="radio"][name="operation"]').forEach(radio => {
+    $$('.radio').forEach(radio => {
         radio.addEventListener('change', handleRadioChange);
     });
 
-    // Attach click event listeners to 'Return to Main Page' buttons
     $$('.return-to-main').forEach(button => {
         button.addEventListener('click', handleReturnToMain);
     });
 
-    // Attach input event listeners for validation
     $('#boxcar-id').addEventListener('input', validateBoxcarId);
     $('#tare-weight').addEventListener('input', validateTareWeight);
     $('#max-gross-weight').addEventListener('input', validateMaxGrossWeight);
@@ -135,18 +131,17 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#divC').style.display = 'none';
         $('#divB').style.display = 'block';
     });
-    $('#return-to-divD').addEventListener('click', () => {
-        $('#divF').style.display = 'none';
-        $('#divE').style.display = 'none';
-        $('#divD').style.display = 'block';
+    $$('.return-to-divD').forEach(button => {
+        button.addEventListener('click', handleReturnToDivD)
     });
     $('#process-freight').addEventListener('click', processFreight);
     $('#reset-freight').addEventListener('click', resetFreightForm);
+    $('#selected-transport-id').addEventListener('input', validateTransportId);
+    $('#selected-description').addEventListener('input', validateDescription);
+    $('#selected-cargo-weight').addEventListener('input', validateCargoWeight);
 });
 
-
 function handleRadioChange() {
-    // Hide all divs when a new radio is selected
     ['#divA', '#divB', '#divC', '#divD', '#divE', '#divF', '#divG'].forEach(id => {
         const div = $(id);
         if (div) {
@@ -155,7 +150,6 @@ function handleRadioChange() {
         }
     });
 
-    // Mapping radio buttons to corresponding div IDs
     const divMapping = {
         'create-boxcar': '#divB',
         'add-freight': '#divD',
@@ -177,9 +171,7 @@ function handleRadioChange() {
     }
 }
 
-
 function handleReturnToMain() {
-    // Hide all specific divs
     ['#divB', '#divC', '#divD', '#divE', '#divF', '#divG'].forEach(id => {
         const div = $(id);
         if (div) {
@@ -200,6 +192,15 @@ function handleReturnToMain() {
     resetFreightForm()
 }
 
+function handleReturnToDivD() {
+    const divD = $('#divD');
+    if (divD) {
+        divD.style.display = 'block';
+        $('#divE').style.display = 'none';
+        $('#divF').style.display = 'none';
+        $('#divD .return-to-main').style.display = 'block';
+    }
+}
 
 function addBoxCar() {
     const errors = [
@@ -214,7 +215,7 @@ function addBoxCar() {
         .join('\n');
 
     if (errorMessage) {
-        alert(`Please fix:\n${errorMessage}`);
+        return;
     } else {
         $('#divC').style.display = 'block';
         createBoxCarTable($('#display-all-boxcars'), $('#boxcar-id'), $('#tare-weight'), $('#max-gross-weight'), $('#cargo-weight'), $('#gross-weight'));
@@ -222,7 +223,6 @@ function addBoxCar() {
         resetForm();
     }
 }
-
 
 function createBoxCarTable(table, displayBoxcarID, displayTareWeight, displayMaxGross, displayCargoWeight, displayGrossWeight) {
     const row = document.createElement('tr');
@@ -247,33 +247,28 @@ function createBoxCarTable(table, displayBoxcarID, displayTareWeight, displayMax
     updateTotalWeight(table);
 }
 
-
 function updateTotalWeight(table) {
     const totalWeightCell = $('#total-weight');
     let totalCargoWeight = 0;
 
     const rows = table.querySelectorAll('tbody tr');
 
-    // Calculate total cargo weight by iterating over each row's Cargo Weight column
     rows.forEach(row => {
-        const cargoWeightValue = parseFloat(row.cells[4].textContent);  // Use .textContent for table cells
+        const cargoWeightValue = parseFloat(row.cells[4].textContent); 
         if (!isNaN(cargoWeightValue)) {
             totalCargoWeight += cargoWeightValue;
         }
     });
 
-    totalWeightCell.textContent = totalCargoWeight.toFixed(2);  // Update the total cargo weight display
+    totalWeightCell.textContent = totalCargoWeight.toFixed(2); 
 }
 
-
 function createFreightListing(boxCar) {
-    const ul = $('#select-box-car');  // Ensure this is your <ul> element
-    const boxCarValue = boxCar.value;  // Get the value from the boxCar input element
+    const ul = $('#select-box-car');
+    const boxCarValue = boxCar.value;
 
-    // Check if the value already exists in the list
     const exists = Array.from(ul.querySelectorAll('li button')).some(button => button.textContent === boxCarValue);
 
-    // Only add a new list item if the value does not exist
     if (!exists) {
         const li = document.createElement('li');
         const button = document.createElement('button');
@@ -288,7 +283,6 @@ function createFreightListing(boxCar) {
     }
 }
 
-
 function disableButtonList(ul) {
     const buttons = ul.querySelectorAll('button');
     buttons.forEach(button => {
@@ -296,82 +290,60 @@ function disableButtonList(ul) {
     });
 }
 
-
 function displayBoxCarFreightInfo(boxCarValue) {
-    // Set the value of the selected boxcar input field
     $('#divE').style.display = 'none';
     $('#selected-boxcar-id').value = boxCarValue;
 
-    // Enable the input fields and buttons
     ['#selected-transport-id', '#selected-description', '#selected-cargo-weight'].forEach(id => {
         $(id).disabled = false;
     });
-
-    // Attach event listeners for validation
-    $('#selected-transport-id').addEventListener('input', () => validateTransportId($('#selected-transport-id').value));
-    $('#selected-description').addEventListener('input', () => validateDescription($('#selected-description').value));
-    $('#selected-cargo-weight').addEventListener('input', () => validateCargoWeight($('#selected-cargo-weight').value));
-
-    // Validate immediately using initial values
-    validateTransportId($('#selected-transport-id').value);
-    validateDescription($('#selected-description').value);
-    validateCargoWeight($('#selected-cargo-weight').value);
 }
 
-function validateTransportId(value) {
-    const regex = /^[A-Z]{3}\d{5}$/;
-    const errorSpan = $('#selected-transport-id-error');
-    toggleError(errorSpan, regex.test(value), 'Transport ID must be 3 capital letters followed by 5 digits');
+function validateTransportId() {
+    const transportIdInput = ($('#selected-transport-id').value);
+    const regex = /^[A-Z]{3}\d{4}S0[1-4]$/;
+    if (!regex.test(transportIdInput)) {
+        showError(selectedTransportIdError, 'Transport ID must be 3 capital letters followed by 4 digit, an S and [01-04])\n EX.TXL2031S02');
+    } else {
+        hideError(selectedTransportIdError);
+    }
 }
 
-function validateDescription(value) {
-    const errorSpan = $('#selected-description-error');
-    toggleError(errorSpan, value !== '', 'Description is required for tracking');
+function validateDescription() {
+    const descriptionInput = ($('#selected-description').value);
+    if (descriptionInput == '') {
+        showError(selectedDescriptionError, 'Description is required for tracking');
+    } else {
+        hideError(selectedDescriptionError);
+    }
 }
 
-
-
-
-function validateCargoWeight(value) {
-    const errorSpan = $('#selected-cargo-weight-error');
-
-    const freightCargoWeight = parseFloat(value.trim());
+function validateCargoWeight() {
+    const cargoWeightInput = ($('#selected-cargo-weight').value)
+    const freightCargoWeight = parseFloat(cargoWeightInput.trim());
     const selectedBoxcarId = $('#selected-boxcar-id').value;
 
     let maxGrossWeight = 0;
     let grossWeight = 0;
 
-    // Retrieve max gross weight and gross weight from the display table
     const boxcarRows = $$('#display-all-boxcars tr');
     boxcarRows.forEach(row => {
         if (row.cells[0].textContent === selectedBoxcarId) {
-            maxGrossWeight = parseFloat(row.cells[2].textContent); // Assuming maxGrossWeight is in the 3rd cell
-            grossWeight = parseFloat(row.cells[4].textContent); // Assuming grossWeight is in the 5th cell
+            maxGrossWeight = parseFloat(row.cells[2].textContent);
+            grossWeight = parseFloat(row.cells[4].textContent);
         }
     });
 
-    let errorMessage = '';
-    if (isNaN(freightCargoWeight) || value == '' || isNaN(value)) {
-        errorMessage = 'Cargo Weight must be a valid number';
+    if (isNaN(freightCargoWeight) || cargoWeightInput == '' || isNaN(cargoWeightInput)) {
+        showError(selectedCargoWeightError, 'Cargo Weight must be a valid number');
     } else if (freightCargoWeight <= 0) {
-        errorMessage = 'Cargo Weight must be greater than 0';
+        showError(selectedCargoWeightError, 'Cargo Weight must be greater than 0');
     } else if (freightCargoWeight > (maxGrossWeight - grossWeight)) {
-        errorMessage = `Cargo Weight exceeds the maximum gross weight of ${maxGrossWeight.toFixed(2)-grossWeight.toFixed(2)} for this car.`; 
-    }
-
-    toggleError(errorSpan, !errorMessage, errorMessage);
-}
-
-function toggleError(errorSpan, condition, message) {
-    if (!condition) {
-        errorSpan.textContent = message;
-        errorSpan.style.display = 'block';
-        errorSpan.style.color = 'red';
+        showError(selectedCargoWeightError, `Cargo Weight exceeds the maximum gross weight of ${maxGrossWeight.toFixed(2)-grossWeight.toFixed(2)} for this car.`);
     } else {
-        errorSpan.style.display = 'none';
+        hideError(selectedCargoWeightError);
     }
 }
-
 
 function resetFreightForm(resetBoxcarId = true) {
     const buttons = $('#select-box-car').querySelectorAll('button');
@@ -390,31 +362,29 @@ function resetFreightForm(resetBoxcarId = true) {
             $(id).value = '';
         });
     }
-
-    ['#selected-transport-id', '#selected-description', '#selected-cargo-weight'].forEach(id => {
-        const validateFunction = {
-            '#selected-transport-id': validateTransportId,
-            '#selected-description': validateDescription,
-            '#selected-cargo-weight': validateCargoWeight
-        }[id];
-        validateFunction($(id).value);
-    });
+    validateTransportId();
+    validateDescription();
+    validateCargoWeight();
 
     
     $('#divD .return-to-main').style.display = 'block';
     $('#divE').style.display = 'none';
 }
 
-
-
 function processFreight() {
-    const errorMessages = ['#selected-transport-id-error', '#selected-description-error', '#selected-cargo-weight-error']
-        .filter(id => $(id).style.display !== 'none')
-        .map(id => $(id).textContent)
+    const errors = [
+        { element: selectedTransportIdError, message: selectedTransportIdError.textContent },
+        { element: selectedDescriptionError, message: selectedDescriptionError.textContent },
+        { element: selectedCargoWeightError, message: selectedCargoWeightError.textContent }
+    ];
+    
+    const errorMessage = errors
+        .filter(error => error.element.style.display !== 'none')
+        .map(error => error.message)
         .join('\n');
 
-    if (errorMessages) {
-        alert(`Please fix:\n${errorMessages}`);
+    if (errorMessage) {
+        return;
     } else {
         const selectedBoxcarId = $('#selected-boxcar-id').value;
         const cargoWeight = parseFloat($('#selected-cargo-weight').value.trim());
@@ -422,16 +392,14 @@ function processFreight() {
         let maxGrossWeight = 0;
         let grossWeight = 0;
 
-        // Retrieve max gross weight and gross weight from the display table
         const boxcarRows = $$('#display-all-boxcars tr');
         boxcarRows.forEach(row => {
             if (row.cells[0].textContent === selectedBoxcarId) {
-                maxGrossWeight = parseFloat(row.cells[2].textContent); // Assuming maxGrossWeight is in the 3rd cell
-                grossWeight = parseFloat(row.cells[4].textContent); // Assuming grossWeight is in the 5th cell
+                maxGrossWeight = parseFloat(row.cells[2].textContent);
+                grossWeight = parseFloat(row.cells[4].textContent);
             }
         });
 
-        // Calculate total loaded weight from both the current manifest and the all-freight-table
         const manifestTitle = $('#boxcar-manifest-title');
         const totalLoadedWeightManifest = manifestTitle && manifestTitle.textContent.includes(selectedBoxcarId)
             ? Array.from($$('#boxcar-manifest tbody tr')).reduce((total, row) => {
@@ -452,81 +420,64 @@ function processFreight() {
         const remainingWeight = maxGrossWeight - grossWeight - totalLoadedWeight;
 
         if (cargoWeight > remainingWeight) {
-            alert(`The cargo weight exceeds the remaining weight for this boxcar. Remaining weight: ${remainingWeight.toFixed(2)}\n
-            Sending cargo to warehouse`);
             createFreightTable('Warehouse', $('#selected-transport-id'), $('#selected-description'), $('#selected-cargo-weight'));
             createWarehouseTable($('#selected-transport-id'), $('#selected-description'), $('#selected-cargo-weight'));
-            resetFreightForm(false); // Ensure the selected boxcar ID is retained
+            resetFreightForm(false);
             populateBoxcarManifest(selectedBoxcarId);
             $('#divE').style.display = 'block';
             $('#divD .return-to-main').style.display = 'none';
+            $('#divE .return-to-main').style.display = 'none';
+            $('#divE .return-to-divD').style.display = 'none';
 
-            // Re-validate the fields to clear error messages
-            ['#selected-transport-id', '#selected-description', '#selected-cargo-weight'].forEach(id => {
-                const validateFunction = {
-                    '#selected-transport-id': validateTransportId,
-                    '#selected-description': validateDescription,
-                    '#selected-cargo-weight': validateCargoWeight
-                }[id];
-                validateFunction($(id).value);
-            });
+            validateTransportId();
+            validateDescription();
+            validateCargoWeight();
         } else {
             createFreightTable($('#selected-boxcar-id').value, $('#selected-transport-id'), $('#selected-description'), $('#selected-cargo-weight'));
-            resetFreightForm(false); // Ensure the selected boxcar ID is retained
+            resetFreightForm(false);
             populateBoxcarManifest(selectedBoxcarId);
             $('#divE').style.display = 'block';
             $('#divD .return-to-main').style.display = 'none';
 
-            // Re-validate the fields to clear error messages
-            ['#selected-transport-id', '#selected-description', '#selected-cargo-weight'].forEach(id => {
-                const validateFunction = {
-                    '#selected-transport-id': validateTransportId,
-                    '#selected-description': validateDescription,
-                    '#selected-cargo-weight': validateCargoWeight
-                }[id];
-                validateFunction($(id).value);
-            });
+            validateTransportId();
+            validateDescription();
+            validateCargoWeight();
         }
     }
 }
 
-
-
 function populateBoxcarManifest(boxcarId) {
     const manifestTable = $('#boxcar-manifest tbody');
-    const allFreightRows = Array.from($('#freight-table-body').querySelectorAll('tr'));
+    const allFreightRows = Array.from($('#all-freight-table').querySelectorAll('tr'));
 
-    // Clear the existing manifest table
     manifestTable.innerHTML = '';
 
     allFreightRows.forEach(row => {
-        if (row.cells[3]?.textContent === boxcarId) { // Assuming 'Status' is the 4th cell
+        if (row.cells[3]?.textContent === boxcarId) {
             const manifestRow = document.createElement('tr');
 
             const transportIdCell = document.createElement('td');
-            transportIdCell.textContent = row.cells[0].textContent; // Transport ID
+            transportIdCell.textContent = row.cells[0].textContent;
             manifestRow.appendChild(transportIdCell);
 
             const descriptionCell = document.createElement('td');
-            descriptionCell.textContent = row.cells[1].textContent; // Description
+            descriptionCell.textContent = row.cells[1].textContent; 
             manifestRow.appendChild(descriptionCell);
 
             const weightCell = document.createElement('td');
-            weightCell.textContent = row.cells[2].textContent; // Weight
+            weightCell.textContent = row.cells[2].textContent;
             manifestRow.appendChild(weightCell);
 
             manifestTable.appendChild(manifestRow);
         }
     });
 
-    // Update the total cargo weight in the manifest table footer
     updateTotalFreightWeight();
 }
 
 function createFreightTable(freightBoxcarId, freightTransportId, freightDescription, freightCargoWeight) {
-    const tbody = $('#freight-table-body');
+    const tbody = $('#all-freight-table tbody');
 
-    // Create a new row and populate it
     const row = document.createElement('tr');
     const cells = [
         freightTransportId.value,
@@ -541,10 +492,8 @@ function createFreightTable(freightBoxcarId, freightTransportId, freightDescript
         row.appendChild(cell);
     });
 
-    // Append the row to tbody
     tbody.appendChild(row);
 
-    // Update the total cargo weight in the footer
     updateTotalFreightWeight();
 }
 
@@ -584,7 +533,6 @@ function updateTotalFreightWeight() {
 
 function createWarehouseTable(freightTransportId, freightDescription, freightCargoWeight) {
     const tbody = $('#warehouse-manifest tbody');
-    // Create a new row and populate it
     const row = document.createElement('tr');
     const cells = [
         freightTransportId.value,
@@ -598,7 +546,6 @@ function createWarehouseTable(freightTransportId, freightDescription, freightCar
         row.appendChild(cell);
     });
 
-    // Append the row to tbody
     tbody.appendChild(row);
 
     updateTotalWarehouseWeight();
@@ -621,4 +568,5 @@ function updateTotalWarehouseWeight() {
     });
 
     totalWarehouseWeightCell.textContent = totalWarehouseWeight.toFixed(2);
+    $('#divF').style.display = 'block';
 }
