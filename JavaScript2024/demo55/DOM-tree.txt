@@ -1,0 +1,63 @@
+NODE TREE - DEMO55
+Note:  Text node markers not displayed except within main.
+
+ HTML
+ |
+ +head
+ |   |
+ |   +link
+ |   |
+ |   +title Demo55
+ |
+ +body
+     |
+     +header
+     |     |
+     |     +h1 JavaScript Restaurant
+     |     |
+     |     +label No Version
+     |     |
+     |     +h4 Demo 55 - DOM Modification
+     |
+     +main  (4)
+        0+ #text
+         |                         
+        1+h3 Main Menu
+         |
+	2+ #text
+	 |
+        3+div (3)
+         |  |
+         | 0+#text
+         |  |
+         | 1+p Hotdog
+         |  |
+         | 2+#text
+         |  |
+         | 3+p Hamberger
+         |  |
+         | 4+#text
+         |  |
+         | 5+p French Fries
+         |  |
+         | 6+#text
+         |
+        4+ #text
+         |
+        5+h3 Desert
+         |
+        6+ #text
+         |
+        7+div  (2)
+         |  |
+         | 0+#text
+         |  |
+         | 1+p Apple Pie
+         |  |
+         | 2+#text
+         |  |
+         | 3+p Ice Cream
+         |  |
+         | 4+#text
+         |
+        8+ #text

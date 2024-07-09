@@ -115,11 +115,6 @@ function hideError(errorElement) {
     errorElement.style.display = 'none';
 }
 
-/* TEST TO ENSURE JUST USING resetForm IS ACTUALLY WORKING ON PAGE LOAD
-    validateMaxGrossWeight();
-    validateBoxcarId();
-    validateTareWeight(); */
-
 function resetForm() {
     $('#boxcar-id').value = '';
     $('#tare-weight').value = '';
@@ -127,6 +122,7 @@ function resetForm() {
     validateMaxGrossWeight();
     validateBoxcarId();
     validateTareWeight();
+    resetAnimation();
 }
 
 resetForm();
@@ -153,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#divC').style.display = 'none';
         $('#divB').style.display = 'block';
         $('#divB .return-to-main').style.display = 'block';
+        resetAnimation();
     });
     $('#divC .return-to-main').addEventListener('click', () => {
         $('#divB .return-to-main').style.display = 'block';
@@ -204,6 +201,7 @@ function handleReturnToMain() {
             div.style.display = 'none';
             div.setAttribute('aria-hidden', 'true');
             resetForm();
+            resetAnimation();
         }
     });
     
@@ -241,10 +239,8 @@ function addBoxCar() {
         .join('\n');
 
     if (errorMessage) {
-        console.error(errorMessage);  // Log or alert the error messages
         return;
     } else {
-        // Create a new Boxcar object from the validated form inputs
         const newBoxcar = new Boxcar(
             $('#boxcar-id').value,
             $('#tare-weight').value,
@@ -253,17 +249,15 @@ function addBoxCar() {
             $('#gross-weight').value
         );
 
-        // Add the new Boxcar to the array
         boxcars.push(newBoxcar);
 
-        // Add new Boxcar to the table
         createBoxCarTable(newBoxcar);
 
-        // Display the Boxcar section
         $('#divC').style.display = 'block';
         createFreightListing(newBoxcar.id);
-        // Reset the form fields
         resetForm();
+        $('#divB .return-to-main').style.display = 'none';
+        myMove()
     }
 }
 
@@ -273,11 +267,9 @@ function createBoxCarTable() {
     if (!tbody) {
         tbody = table.appendChild(document.createElement('tbody'));
     } else {
-        // Clear existing rows before adding new ones
         tbody.innerHTML = '';
     }
 
-    // Iterate over all boxcars and create rows
     boxcars.forEach(boxcar => {
         const row = document.createElement('tr');
         const values = [boxcar.id, boxcar.tareWeight, boxcar.maxGrossWeight, boxcar.cargoWeight, boxcar.grossWeight];
@@ -294,10 +286,7 @@ function createBoxCarTable() {
 
 function updateTotalWeight() {
     const totalWeightCell = $('#total-weight');
-    // Calculate the total cargo weight by summing the cargoWeight of each Boxcar in the array
     let totalCargoWeight = boxcars.reduce((sum, boxcar) => sum + parseFloat(boxcar.cargoWeight), 0);
-    alert(totalCargoWeight);
-    // Update the total weight display with the computed value
     totalWeightCell.textContent = totalCargoWeight.toFixed(2);
 }
 
@@ -331,6 +320,7 @@ function disableButtonList(ul) {
     const buttons = ul.querySelectorAll('button');
     buttons.forEach(button => {
         button.disabled = true;
+        button.style.backgroundColor = 'red';
     });
 }
 
@@ -397,6 +387,7 @@ function resetFreightForm(resetBoxcarId = true) {
         });
         buttons.forEach(button => {
             button.disabled = false;
+            button.style.backgroundColor = '#5c67f2'
         });
         ['#selected-transport-id', '#selected-description', '#selected-cargo-weight'].forEach(id => {
             $(id).disabled = true;
@@ -414,6 +405,7 @@ function resetFreightForm(resetBoxcarId = true) {
     $('#divD .return-to-main').style.display = 'block';
     $('#divE').style.display = 'none';
     $('#divF').style.display = 'none';
+
 }
 
 function processFreight() {
@@ -578,16 +570,17 @@ function createFreightTable(freights) {
 
 function updateTotalFreightWeight() {
     const totalFreightWeightCell = $('#total-freight-weight');
-    if (!totalFreightWeightCell) {
-        console.error("Total freight weight element not found");
-        return;
-    }
+    const totalCargoWeightCell = $('#total-cargo-weight');
 
-    // Sum the cargo weight only for freights that are not marked as 'Warehouse'
     let totalFreightWeight = freights.reduce((total, freight) => {
         return freight.boxcarId !== 'Warehouse' ? total + freight.cargoWeight : total;
     }, 0);
 
+    let totalCargoWeight = freights.reduce((total, freight) => {
+        return freight.cargoWeight !== 0 ? total + freight.cargoWeight : total;
+    }, 0);
+
+    totalCargoWeightCell.textContent = totalCargoWeight.toFixed(2);
     totalFreightWeightCell.textContent = totalFreightWeight.toFixed(2);
 }
 
@@ -635,3 +628,35 @@ function updateTotalWarehouseWeight() {
     $('#divF').style.display = 'block';
 }
 
+
+// Something for fun //
+var id = null;
+function myMove() {
+    var elem = $('#myAnimation');   
+    var pos = 0;
+    elem.style.backgroundColor = 'red';
+    elem.textContent = '';
+    clearInterval(id);
+    id = setInterval(frame, 10);
+    function frame() {
+    if (pos == 500) {
+        clearInterval(id);
+        elem.style.backgroundColor = '#1dd605';
+        elem.textContent = 'Success!';
+    } else {
+        pos++;
+        elem.style.left = pos + 'px'; 
+        }
+    }
+}
+
+function resetAnimation() {
+    var elem = $('#myAnimation');   
+    var pos = 0;
+    elem.style.backgroundColor = 'red';
+    elem.textContent = '';
+    elem.style.left = pos + 'px';
+    clearInterval(id);
+}
+
+  // Something for fun //

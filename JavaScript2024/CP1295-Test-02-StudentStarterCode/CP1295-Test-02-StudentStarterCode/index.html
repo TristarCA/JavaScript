@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CP1295 Test 02 CNA V1 </title>
+    <link rel="stylesheet" href="test2.css">
+</head>
+
+<body>
+    <main>
+            <h1>CNA Weather Studies</h1>
+            <h4>CNA Weather Statistics</h4>
+            <h4>Mon to Fri Recording System</h4>
+            <h4>Enter each day's data and press "y" to accept data</h4>
+
+            <hr>
+
+            <div id="current_totals">
+                <label for="day_id">Current Day</label>
+                <input type="text" id="day_id" class="gray_bk" value="0" readonly>
+                <br>
+                <label for="rain_total_id">Total Rainfall</label>
+                <input type="text" id="rain_total_id" class="gray_bk" value="0" readonly>
+                <br>
+                <label for="snow_total_id">Total Snowfall</label>
+                <input type="text" id="snow_total_id" class="gray_bk" value="0" readonly>
+            <br>
+        </div>
+
+        <hr>
+
+        <div id="data_entry_id">
+            <label for="precipitation_input_id">Daily Precipitation (mm)</label>
+            <input type="text" id="precipitation_input_id" 
+                            name="precipitation_input_id" value="0">
+                            <span>******</span>
+            <br>
+            <label for="inches_display_id">Daily Precipitation (inches)</label>
+            <input type="text" id="inches_display_id" 
+                            name="inches_display_id" class="gray_bk" value="0" readonly>
+            <br>
+            <label for="rain_selected_id">Rain</label>
+            <input type="radio" id="rain_selected_id" name="selection_choice" value="Rain" checked>
+            <label for="snow_selected_id">Snow</label>
+            <input type="radio" id="snow_selected_id" name="selection_choice" value="Snow">
+
+        </div>            
+
+        <div id="results_id">
+            <hr>
+            <h3>Results</h3>
+        </div>
+
+        <hr>
+
+        <div id="yn_id">
+            <label for="yn_input_id">
+                Enter "y" to Process daily input and continue to Next Day
+            </label>
+            <input type="text" id="yn_input_id" 
+                            name="yn_input_id" class="narrow" value=""
+                            placeholder="y">
+        </div>
+
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="test2_2.js"></script>
+
+</body>
+
+</html>

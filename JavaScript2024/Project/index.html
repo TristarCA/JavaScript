@@ -18,6 +18,9 @@
     </div>
     
     <div id="divB">
+        <div id ="myContainer">
+            <div id ="myAnimation"></div>
+        </div>
         <h2>CNA - Rolling Stock - Create New Boxcar</h2>
         <label>Boxcar ID: <input type="text" id="boxcar-id" name="boxcar-id"></label>
         <label>TARE Weight: <input type="text" id="tare-weight" name="tare-weight"></label>
@@ -142,8 +145,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody id="freight-table-body">
-            </tbody>
+            <tbody></tbody>
             <tfoot>
                 <tr>
                     <td colspan="3">Total Cargo Weight:</td>
@@ -155,5 +157,5 @@
     </div>
     
     <script src="script.js"></script>
-</body>
+    </body>
 </html>

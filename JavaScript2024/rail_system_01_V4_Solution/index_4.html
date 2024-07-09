@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assignment 01 CNA RAIL SYSTEM YOUR NAME HERE</title>
+    <link rel="stylesheet" href="rail_system.css">
+</head>
+
+<body>
+    <main>
+        <h1>CNA RAIL SYSTEM</h1>
+        <form id="box_car_form" name="box_car_form" action="process_box_car.html" method="get">
+            <div>
+                <label for="box_car_id">Box Car ID:</label>
+                <input type="text" id="box_car_id" name="box_car_id" value="BX500" readonly>
+            </div>
+
+            <div>
+                <label for="empty_weight_id">Empty Weight:</label>
+                <input type="text" id="empty_weight_id" name="empty_weight_id" value="15000" readonly>
+            </div>
+
+            <div>
+                <label for="total_weight_id">Total Weight:</label>
+                <input type="text" id="total_weight_id" name="total_weight_id" value="0" readonly>
+            </div>
+
+            <div>
+                <label>&nbsp;</label>
+                <input type="button" id="process_box_car_btn" value="Process Box Car">
+                <input type="button" id="process_box_car_reset_form_btn" value="Reset Form">
+            </div>
+
+        </form>
+
+        <form id="add_cargo_form" name="add_cargo_form" action="process_cargo.html" method="get">
+
+            <div>
+                <label for="transport_id">Transport ID:</label>
+                <input type="text" id="transport_id" class="clearx" name="transport_id">
+            </div>
+
+            <div>
+                <label for="description_id">Description:</label>
+                <input type="text" id="description_id" class="clearx" name="description_id">
+            </div>
+
+            <div>
+                <label for="cargo_weight_id">Cargo Weight:</label>
+                <input type="text" id="cargo_weight_id" class="clearx" name="cargo_weight_id">
+            </div>
+
+            <div>
+                <label>&nbsp;</label>
+                <input type="button" id="process_cargo_btn" value="Process Cargo">
+                <input type="button" id="process_cargo_reset_btn" value="Reset Form">
+            </div>
+
+        </form>
+
+    </main>
+    <script src="rail_system_4.js"></script>
+
+</body>
+
+</html>

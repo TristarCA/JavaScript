@@ -164,3 +164,21 @@ label {
     display: flex;
     justify-content: space-between;
 }
+
+#myContainer {
+    width: 600px;
+    height: 100px;
+    position: relative;
+    background: black;
+}
+  
+#myAnimation {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background: red;
+    align-content: center;
+    text-align: center;
+    font-weight: 400;
+    font-family: cursive;
+}

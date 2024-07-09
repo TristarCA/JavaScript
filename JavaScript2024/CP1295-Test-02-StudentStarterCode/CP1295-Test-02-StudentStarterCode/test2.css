@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    margin: 0 auto;
+    width: 550px;
+    border: 3px solid blue;
+    padding: 0 2em 1em;
+}
+
+h1 {
+    color: blue;
+}
+
+div {
+    margin-bottom: 1em;
+}
+
+label {
+    display: inline-block;
+    width: 11em;
+    text-align: right;
+}
+
+input {
+    margin-left: 1em;
+    margin-right: 0.5em;
+}
+
+.backgroundlb {
+    background-color: lightblue;
+
+}
+
+span {
+    color: red;
+}
+
+hr {
+    border: solid 5px Green;
+    padding-top:0px; 
+    margin:25px auto 15px auto;
+    clear:both;
+}
+
+.gray_bk {
+    background-color: lightgray;
+}
+
+.narrow {
+    width: 16px;
+}

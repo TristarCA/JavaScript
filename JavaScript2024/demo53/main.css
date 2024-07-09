@@ -1,0 +1,26 @@
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.blue {
+  cursor: pointer;
+  color: blue;
+}
+.orange {
+  color: orange;
+}
+.yellow {
+  color: yellow;
+}
+.indigo {
+  color: indigo;
+}
+.violet {
+  color: violet;
+}
+.underline {
+  text-decoration-line: underline;
+}
+

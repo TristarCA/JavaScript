@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateDisplay() {
-    
         $('#average-data').value = totalPoints;
     }
 
@@ -100,14 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
             resultsList = document.createElement('ul');
             resultsList.id = 'results-list';
             $('#container').appendChild(resultsList);
-        } else {
-            resultsList.innerHTML = ''; // Clear existing list
         }
         dataHistory.reverse()
+        let i = 1;
         dataHistory.forEach(entry => {
             let li = document.createElement('li');
-            li.textContent = `Original: ${entry.Original}, Processed: ${entry.Checked}`;
+            li.textContent = `Day: ${i} Original: ${entry.Original}, Processed: ${entry.Checked}`;
             resultsList.appendChild(li);
+            i++;
         });
 
         $('#data-entry').style.display = 'none';

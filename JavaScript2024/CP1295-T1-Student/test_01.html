@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Miles Per Gallon Calculator</title>
+    <link rel="stylesheet" href="test_01.css">
+</head>
+<body>
+    <main>
+        <h1>Flight Ticket Booking</h1>
+        <div>
+            <label for="name_id">Name:</label>
+            <input type="text" class = "clear_list" id="name_id">
+            <span id="name_feedback_id">*</span>
+        </div>
+        <div>
+            <label for="seats_id">Seats:</label>
+            <input type="text" class = "clear_list" id="seats_id">
+            <span id="seats_feedback_id">*</span>
+        </div>
+        <div>
+            <label for="seat_count_id">Seat Count:</label>
+            <input type="text" class = "clear_list" id="seat_count_id" disabled>
+            <span id="seat_count_feedback_id">*</span>
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="button" id="process_ticket_id" value="Process">
+            <input type="button" id="clear_fields_id" value="Clear">
+        </div>
+        <textarea id="output_ta_id" class = "clear_list">Output</textarea>
+    </main>
+    <script src="test_01.js"></script>   
+</body>
+
+</html>

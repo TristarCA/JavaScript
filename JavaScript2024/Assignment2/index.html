@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNA Railroad</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CNA RAIL SYSTEM</h1>
+        
+        <form id="BoxCarForm">
+            <label for="BoxCarID">Box Car ID:</label>
+            <input id="BoxCarID" type="text" readonly value="BX500"><br>
+            <label for="EmptyWeight">Empty Weight:</label>
+            <input id="EmptyWeight" type="text" readonly value="15000"><br>
+            <label for="MaxWeight">Max Weight:</label>
+            <input id="MaxWeight" type="text" readonly value="105000"><br>
+            <label for="CurrentWeight">Current Weight:</label>
+            <input id="CurrentWeight" type="text" readonly value="15000"><br>
+            <button disabled>Process Box Car</button>
+            <button disabled>Reset Form</button>
+        </form>
+
+        <form id="CargoProcessingForm" action="">
+            <label for="TransportID">Transport ID:</label>
+            <input type="text" id="TransportID"><br>
+            <label for="Description">Description:</label>
+            <input type="text" id="Description"><br>
+            <label for="CargoWeight">Cargo Weight:</label>
+            <input type="text" id="CargoWeight"><br>
+            <button id="NewCargo">Process Cargo</button>
+            <button type="reset" id="ResetCargo">Reset Form</button>
+        </form>
+
+        <div class="status">
+            <h3>Cargo Status</h3>
+            <table>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                    <th>Status</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="manifest">
+            <h3 id="manifestHeader"></h3>
+            <table>
+                <tr>
+                    <th>Transport ID</th>
+                    <th>Description</th>
+                    <th>Weight</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="process_cargo.js"></script>
+</body>
+
+</html>
