@@ -1,114 +1,166 @@
-#divA {
-    display: grid;
-    width: 100%; /* Ensures the div takes full width of its container */
+body {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    background: #f0f0f0;
 }
 
-.header-row, .button-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Creates 5 columns of equal width */
-    text-align: center; /* Centers the text horizontally */
+h1 {
+    text-align: center;
 }
 
-h4 {
-    margin: 0;
-    padding: 10px; /* Adds padding inside each header for better visibility */
-    border-bottom: 2px solid black; /* Adds a bottom border to each header */
+h1, h2, h3, h4 {
+    color: #333;
 }
 
-input.radio {
-    justify-self: center; /* Centers radio buttons in their grid cell */
-    margin-top: 10px; /* Adds margin on top for spacing between rows */
+/* Unified input and button styles */
+input[type="text"], input[type="button"], button {
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-#divB {
-    display: grid;
-    grid-template-columns: 150px auto; /* Provides specific width for labels and remaining space for inputs */
-    gap: 10px 20px; /* Vertical and horizontal gaps between grid items */
-    max-width: 600px; /* Maximum width of the form */
-    margin: auto; /* Center align the form */
-    padding: 20px; /* Padding around the form */
-}
-
-#divB label {
-    display: block; /* Ensure labels appear above inputs */
-    margin-bottom: 5px; /* Space below each label */
-}
-
-#divB input {
-    display: block; /* Ensure inputs are on their own line */
-    width: calc(100% - 20px); /* Adjust width to account for padding/margins */
-    margin-bottom: 20px; /* Space below each input */
-}
-
-#divC {
-    display: grid;
-    grid-template-columns: 1fr; /* Full width for simplicity */
-    gap: 20px; /* Spacing between elements within the div */
-    max-width: 600px; /* Maximum width of the content */
-    margin: auto; /* Center align the div */
-    padding: 20px; /* Padding around the div */
-}
-
-#divC p, #divC label {
-    text-align: center; /* Centers the text of p and label */
-}
-
-#display-all-boxcars {
-    width: 100%; /* Full width to match the parent's width */
-    border-collapse: collapse; /* Collapse borders for a clean look */
-    margin-top: 20px; /* Spacing from the label */
-}
-
-#display-all-boxcars th, #display-all-boxcars td {
-    border: 1px solid black; /* Border for cells */
-    padding: 10px; /* Padding inside cells */
-    text-align: center; /* Center text in cells */
-}
-
-#display-all-boxcars thead th {
-    background-color: #f3f3f3; /* Light background for header */
-    border-bottom: 2px solid black; /* Stronger line under headers */
-}
-
-#display-all-boxcars tfoot td {
-    font-weight: bold; /* Make footer text bold */
-    text-align: right; /* Align footer text to the right */
-    padding-right: 10px; /* Right padding for footer text */
-}
-
-#button-div {
-    display: flex; /* Using flexbox to align buttons */
-    justify-content: space-between; /* Distributes space between buttons */
-    padding: 10px 0; /* Adds vertical padding for better spacing */
-}
-
-#button-div input[type="button"] {
-    flex-grow: 1; /* Each button will grow equally */
-    margin: 0 10px; /* Adjust horizontal margins for button spacing */
-}
-
-.freight-info {
+/* Unified layout styles for div sections */
+.section, #divB, #divC, #divD, #divE, #divF, #divG {
     display: flex;
-    flex-direction: column;  /* Stack children vertically */
-    padding: 10px;           /* Padding for aesthetics */
-    margin-top: 10px;        /* Space after the button */
-    border: 1px solid #ccc;  /* Optional border */
-    background-color: #f9f9f9; /* Light background */
-    max-width: 600px; /* Controls the max width to prevent stretching */
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.freight-info div {
-    margin-bottom: 10px;    /* Space between input groups */
+/* Specific adjustments for radio buttons */
+.radio {
+    margin-right: 10px;
 }
 
-.freight-info label {
-    margin-right: 5px;      /* Space between label and input */
-    min-width: 120px;       /* Ensure labels align nicely */
-    display: inline-block;  /* Align label with input */
+/* Flex layouts for rows */
+.button-row, .header-row, .button-group, .freight-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.freight-button {
-    flex: 1; /* Makes each button flex to fill the space */
-    margin: 5px; /* Optional margin for spacing between buttons */
-    flex-direction: row;
+/* Table styles unified */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+thead {
+    background-color: #f3f3f3;
+}
+
+tfoot {
+    font-weight: bold;
+    background-color: #e9e9e9;
+}
+
+/* Button specific styles */
+input[type="button"], button {
+    background-color: #5c67f2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="button"]:hover, button:hover {
+    background-color: #4a54e1;
+}
+
+/* General Styles for All Input Labels */
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* Flex Container for Buttons */
+.button-div {
+    display: flex;
+    justify-content: space-around;
+}
+
+#divD {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#divD h1, #divD h2 {
+    text-align: center;
+    width: 100%;
+}
+
+#divD .button-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#divD input[type="text"], #divD input[type="button"], #divD button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+#divD #box-car-list ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+#divD #box-car-list li {
+    background-color: #e8e8e8;
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#divD #box-car-list li:hover {
+    background-color: #d0d0d0;
+}
+
+#divD .freight-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#divD .freight-info label {
+    margin-bottom: 5px;
+}
+
+#divD .freight-info input {
+    margin-bottom: 10px;
+}
+
+#divD .freight-button {
+    padding: 10px;
+    margin: 5px;
+    width: calc(50% - 10px);
+}
+
+#divD .freight-info .button-group {
+    display: flex;
+    justify-content: space-between;
 }

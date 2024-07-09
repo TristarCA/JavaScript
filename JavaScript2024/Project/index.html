@@ -7,13 +7,7 @@
 </head>
 <body>
     <div id="divA">
-        <div class="header-row">
-            <h4>Create Boxcar</h4>
-            <h4>Add Freight</h4>
-            <h4>Boxcar Data</h4>
-            <h4>Warehouse Data</h4>
-            <h4>All Freight Status</h4>
-        </div>
+        <h1>CNA - Rolling Stock - Main Menu</h1>
         <div class="button-row">
             <label><input type="radio" name="operation" class="radio" id="create-boxcar"> Create Boxcar</label>
             <label><input type="radio" name="operation" class="radio" id="add-freight"> Add Freight</label>
@@ -24,7 +18,7 @@
     </div>
     
     <div id="divB">
-        <h2>CNA-Rolling Stock-Create New Boxcar</h2>
+        <h2>CNA - Rolling Stock - Create New Boxcar</h2>
         <label>Boxcar ID: <input type="text" id="boxcar-id" name="boxcar-id"></label>
         <label>TARE Weight: <input type="text" id="tare-weight" name="tare-weight"></label>
         <label>Max Gross Weight: <input type="text" id="max-gross-weight" name="max-gross-weight"></label>
@@ -37,7 +31,6 @@
             <input type="button" value="Return to Main Page" class="return-to-main">
         </div>
     </div>
-    
     
     <div id="divC">
         <p>Display All Box Cars</p>
@@ -66,9 +59,10 @@
     </div>
     
     <div id="divD">
-        <h1>Box Car List</h1>
+        <h1>CNA - Rolling Stock - Create Freight Entry</h1>
         <div id="box-car-list">
-            <h2>Box Car ID</h2>
+            <h2>Box Car List</h1>
+            <h3>Box Car ID</h2>
             <ul name="select-box-car" id="select-box-car"></ul>
         </div>
         
@@ -93,7 +87,6 @@
     
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
-    
     
     <div id="divE">
         <table id="boxcar-manifest">
@@ -153,7 +146,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2">Total Cargo Weight:</td>
+                    <td colspan="3">Total Cargo Weight:</td>
                     <td id="total-cargo-weight">0</td>
                 </tr>
             </tfoot>
@@ -161,7 +154,6 @@
         <input type="button" value="Return to Main Page" class="return-to-main">
     </div>
     
-
     <script src="script.js"></script>
 </body>
 </html>
