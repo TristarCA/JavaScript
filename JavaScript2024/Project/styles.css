@@ -12,7 +12,6 @@ h1, h2, h3, h4 {
     color: #333;
 }
 
-/* Unified input and button styles */
 input[type="text"], input[type="button"], button {
     padding: 8px;
     margin: 5px 0;
@@ -20,7 +19,6 @@ input[type="text"], input[type="button"], button {
     width: 100%;
 }
 
-/* Unified layout styles for div sections */
 .section, #divB, #divC, #divD, #divE, #divF, #divG {
     display: flex;
     flex-direction: column;
@@ -33,19 +31,18 @@ input[type="text"], input[type="button"], button {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Specific adjustments for radio buttons */
 .radio {
     margin-right: 10px;
+    
 }
 
-/* Flex layouts for rows */
 .button-row, .header-row, .button-group, .freight-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
+    padding: 10px;
 }
 
-/* Table styles unified */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -87,7 +84,6 @@ label {
     font-weight: bold;
 }
 
-/* Flex Container for Buttons */
 .button-div {
     display: flex;
     justify-content: space-around;
