@@ -267,7 +267,9 @@ function createBoxCarTable() {
     if (!tbody) {
         tbody = table.appendChild(document.createElement('tbody'));
     } else {
-        tbody.innerHTML = '';
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
     }
 
     boxcars.forEach(boxcar => {
@@ -293,22 +295,19 @@ function updateTotalWeight() {
 function createFreightListing() {
     const ul = $('#select-box-car');
 
-    // Safely clear the current list to avoid duplication
     while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
     }
 
-    // Loop through each boxcar in the boxcars array
     boxcars.forEach(boxcar => {
         const li = document.createElement('li');
         const button = document.createElement('button');
-        button.textContent = boxcar.id;  // Use the boxcar ID for the button text
+        button.textContent = boxcar.id;
         button.type = 'button';
         
-        // Attach an event listener to each button
         button.addEventListener('click', () => {
             disableButtonList(ul);
-            displayBoxCarFreightInfo(boxcar.id);  // Pass the boxcar ID when the button is clicked
+            displayBoxCarFreightInfo(boxcar.id);
         });
         
         li.appendChild(button);
@@ -458,8 +457,8 @@ function processFreight() {
             const freight = new Freight($('#selected-transport-id').value, $('#selected-description').value, cargoWeight, selectedBoxcarId);
             boxcars.forEach(boxcar => {
                 if (boxcar.id === selectedBoxcarId) {
-                    boxcar.cargoWeight += cargoWeight; // Update cargo weight in the boxcar object
-                    grossWeight = tareWeight + boxcar.cargoWeight; // Update gross weight
+                    boxcar.cargoWeight += cargoWeight;
+                    grossWeight = tareWeight + boxcar.cargoWeight;
                 }
                 resetFreightForm(false);
             });
@@ -482,7 +481,6 @@ function processFreight() {
 
 
 function calculateTotalLoadedWeight(boxcarId) {
-    // This function will sum up all the cargo weights for a given boxcar
     return boxcars.reduce((total, boxcar) => {
         return boxcar.id === boxcarId ? total + boxcar.cargoWeight : total;
     }, 0);
@@ -493,7 +491,6 @@ function populateBoxcarManifest(boxcarId) {
     const manifestTable = document.querySelector('#boxcar-manifest tbody');
     const manifestContainer = document.querySelector('#boxcar-manifest');
 
-    // Create or update the title element
     let titleElement = document.querySelector('#manifest-title');
     if (!titleElement) {
         titleElement = document.createElement('h2');
@@ -502,12 +499,10 @@ function populateBoxcarManifest(boxcarId) {
     }
     titleElement.textContent = `CNA - Box Car ${boxcarId} Manifest`;
 
-    // Clear the existing rows in the manifest table
     while (manifestTable.firstChild) {
         manifestTable.removeChild(manifestTable.firstChild);
     }
 
-    // Filter and populate entries for the specified boxcarId
     freights.filter(freight => freight.boxcarId === boxcarId).forEach(freight => {
         const row = document.createElement('tr');
 
@@ -525,28 +520,23 @@ function populateBoxcarManifest(boxcarId) {
 
         manifestTable.appendChild(row);
     });
-
-    updateTotalFreightWeight();
 }
 
 
 
 function createFreightTable(freights) {
     const tbody = $('#all-freight-table tbody');
-    const titleElement = $('#freight-table-title'); // Assume there is an element with this id for the title
+    const titleElement = $('#freight-table-title');
 
-    // Retrieve the currently selected boxcar ID to set the title
     const selectedBoxcarId = $('#selected-boxcar-id').value;
     if (titleElement) {
-        titleElement.textContent = `CNA - Box Car ${selectedBoxcarId} Manifest`; // Update the title with the selected boxcar ID
+        titleElement.textContent = `CNA - Box Car ${selectedBoxcarId} Manifest`;
     }
 
-    // Safely clear the tbody by removing each child node
     while (tbody.firstChild) {
         tbody.removeChild(tbody.firstChild);
     }
 
-    // Add new rows for each freight object
     freights.forEach(freight => {
         const row = document.createElement('tr');
         const values = [
@@ -571,13 +561,14 @@ function createFreightTable(freights) {
 function updateTotalFreightWeight() {
     const totalFreightWeightCell = $('#total-freight-weight');
     const totalCargoWeightCell = $('#total-cargo-weight');
+    const selectedBoxcarId = $('#selected-boxcar-id').value;
 
     let totalFreightWeight = freights.reduce((total, freight) => {
-        return freight.boxcarId !== 'Warehouse' ? total + freight.cargoWeight : total;
+        return  total + freight.cargoWeight;
     }, 0);
 
     let totalCargoWeight = freights.reduce((total, freight) => {
-        return freight.cargoWeight !== 0 ? total + freight.cargoWeight : total;
+        return freight.boxcarId === selectedBoxcarId && freight.cargoWeight !== 0 ? total + freight.cargoWeight : total;
     }, 0);
 
     totalCargoWeightCell.textContent = totalCargoWeight.toFixed(2);
@@ -589,12 +580,10 @@ function updateTotalFreightWeight() {
 function createWarehouseTable(warehouses) {
     const tbody = $('#warehouse-manifest tbody');
 
-    // Safely clear the tbody by removing each child node
     while (tbody.firstChild) {
         tbody.removeChild(tbody.firstChild);
     }
 
-    // Add new rows for each warehouse object
     warehouses.forEach(warehouse => {
         const row = document.createElement('tr');
         const values = [
@@ -629,7 +618,7 @@ function updateTotalWarehouseWeight() {
 }
 
 
-// Something for fun //
+// ----------------------------------Something for fun------------------------------------------------ //
 var id = null;
 function myMove() {
     var elem = $('#myAnimation');   
@@ -637,7 +626,7 @@ function myMove() {
     elem.style.backgroundColor = 'red';
     elem.textContent = '';
     clearInterval(id);
-    id = setInterval(frame, 10);
+    id = setInterval(frame, 5);
     function frame() {
     if (pos == 500) {
         clearInterval(id);
@@ -659,4 +648,4 @@ function resetAnimation() {
     clearInterval(id);
 }
 
-  // Something for fun //
+// ----------------------------------Something for fun------------------------------------------------ //
