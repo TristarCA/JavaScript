@@ -3,19 +3,21 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CNA Factory Order V5</title>
+    <title>Cookie Testing</title>
     <link rel="stylesheet" href="page1.css">
 </head>
 
 <body>
     <main>
         <h1>Order Form v5</h1>
-        <form action="page2.html" method="get" name="order_form" id="order_form">
+        <h4>Press CTRL + SHIFT + DEL to Clear History between code changes</h4>
+        <h4>CLICK on one of the links below to use port 8080</h4>
+        <form action="http:\\127.0.0.1:8080\page3.html" method="get" name="order_form" id="order_form">
             <fieldset>
-                <legend>Item Information</legend>
+                <legend>Cookie Information</legend>
 
                 <div>
-                    <label for="item_code_id">Item Code:</label>
+                    <label for="item_code_id">Cookie Text:</label>
                     <input type="text" id="item_code_id" name="item_code" placeholder="Exactly 4 characters">
                     <span>*</span>
                     <h3></h3>
@@ -31,14 +33,15 @@
                 </div>
             </fieldset>
             <fieldset id="buttons">
-                <legend>Submit Your Order</legend>
+                <legend>Submit Your Cookie</legend>
                 <div>
                     <label>&nbsp;</label>
                     <input type="submit" id="submit" name="submit" value="Submitt">
-                    <input type="reset" id="reset" name="reset" value="Reset">
                     <input type="button" id="message" name="message" value="Message">
                 </div>
             </fieldset>
+            <a href="http:\\127.0.0.1:8080\page1.html">Write Cookie</a>
+            <a href="http:\\127.0.0.1:8080\page3.html">Read Cookie</a>
         </form>
       
     </main>

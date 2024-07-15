@@ -10,7 +10,9 @@ $(document).ready(() => {
         event.preventDefault();
         const itemCode = $("#item_code_id");
         const cookie_value = getCookieByName("aaaa");
-        $("#message").val(cookie_value);
+        $("#item_code_id").val(cookie_value);
+        const cookie_value2 = getCookieByName("colour");
+        $("#colour_id").val(cookie_value2);
     });
 });
 

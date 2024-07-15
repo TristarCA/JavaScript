@@ -3,20 +3,24 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CNA Factory Order V6</title>
+    <title>COOKIE READER</title>
     <link rel="stylesheet" href="page3.css">
 </head>
 
 <body>
     <main>
-        <h1>Page3.3</h1>
-        <form action="page2.html" method="get" name="order_form" id="order_form">
+        <h1>Cookie Reader V3</h1>
+        <form action="page1.html" method="get" name="order_form" id="order_form">
             <fieldset>
                 <legend>Item Information</legend>
 
                 <div>
-                    <label for="item_code_id">Item Code:</label>
-                    <input type="text" id="item_code_id" name="item_code">
+                    <label for="item_code_id">Cookie Text:</label>
+                    <input type="text" id="item_code_id" name="item_code" readonly>
+                    <br>
+                    <label for="colour_id">Colour:</label>
+                    <input type="text" id="colour_id" name="colour_id" readonly>
+                    <br>
                 </div>
             </fieldset>
             <fieldset id="buttons">
@@ -28,7 +32,7 @@
                 </div>
             </fieldset>
         </form>
-
+        <a href="http:\\127.0.0.1:8080\page1.html">Write Cookie</a>
     </main>
     <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="page3.js"></script>

@@ -17,8 +17,19 @@ $(document).ready(() => {
     $("#order_form").submit(event => {
         event.preventDefault();
         const itemCode = $("#item_code_id")
-        setCookie("aaaa", "bbbb", 1); // 1 day persistent cookie
-        $("#message").val("C1");
+        try {
+            testInput( itemCode );
+            itemCode.next().text("");
+            setCookie("aaaa", itemCode.val(), 1); // 1 day persistent cookie
+            const selRadioBtnVal = $(":radio:checked").val();
+            setCookie("colour", selRadioBtnVal, 1); // 1 day persistent cookie
+            $("#message").val("CK GEN");    
+        }
+        catch(error) {
+            itemCode.next().text(error.name + ":" + error.message);
+            event.preventDefault();
+            $("#message").val("NO CK GEN");    
+        }
     });
 });
 
