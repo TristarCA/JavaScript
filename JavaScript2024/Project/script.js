@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#selected-transport-id').addEventListener('input', validateTransportId);
     $('#selected-description').addEventListener('input', validateDescription);
     $('#selected-cargo-weight').addEventListener('input', validateCargoWeight);
+    $('#advance-day').addEventListener('click', advanceDay);
 });
 
 function handleRadioChange() {
@@ -522,8 +523,6 @@ function populateBoxcarManifest(boxcarId) {
     });
 }
 
-
-
 function createFreightTable(freights) {
     const tbody = $('#all-freight-table tbody');
     const titleElement = $('#freight-table-title');
@@ -615,6 +614,12 @@ function updateTotalWarehouseWeight() {
     let totalWarehouseWeight = warehouses.reduce((total, warehouse) => total + warehouse.cargoWeight, 0);
     totalWarehouseWeightCell.textContent = totalWarehouseWeight.toFixed(2);
     $('#divF').style.display = 'block';
+}
+
+function advanceDay() {
+    var dayValue = parseInt($('#day-counter').value); 
+    dayValue += 1;
+    $('#day-counter').value = dayValue
 }
 
 

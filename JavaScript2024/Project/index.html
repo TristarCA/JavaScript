@@ -5,9 +5,13 @@
     <title>Data Entry Test</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div id="divA">
         <h1>CNA - Rolling Stock - Main Menu</h1>
+        <div class="day">
+            <label>Day<input type="text" name="passed-days" id="day-counter" value="1" disabled><button name="advance-day" id="advance-day">ADVANCE DAY<br>Move Train</button></label>
+        </div>
         <div class="button-row">
             <label><input type="radio" name="operation" class="radio" id="create-boxcar"> Create Boxcar</label>
             <label><input type="radio" name="operation" class="radio" id="add-freight"> Add Freight</label>
