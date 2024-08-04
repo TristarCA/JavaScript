@@ -19,12 +19,12 @@ const selectedCargoWeightError = createErrorMessage($('#selected-cargo-weight'))
 const exceedsMaxWeight = createErrorMessage($('#selected-cargo-weight'));
 
 let boxcars = [];
-function Boxcar(id, tareWeight, maxGrossWeight, cargoWeight, grossWeight) {
+function Boxcar(id, tareWeight, maxGrossWeight, cargoWeight) {
     this.id = id;
     this.tareWeight = parseFloat(tareWeight);
     this.maxGrossWeight = parseFloat(maxGrossWeight);
     this.cargoWeight = parseFloat(cargoWeight);
-    this.grossWeight = parseFloat(grossWeight);
+    this.grossWeight = this.tareWeight + this.cargoWeight;
 }
 
 let freights = [];
@@ -54,7 +54,14 @@ function validateBoxcarId() {
     }
 
     const rows = $$('#display-all-boxcars tr');
-    const exists = Array.from(rows).some(row => row.cells[0].textContent === boxcarIdInput);
+    let exists = false;
+    for (let row of rows) {
+        if (row.cells[0].textContent === boxcarIdInput) {
+            exists = true;
+            break;
+        }
+    }
+
     if (exists) {
         showError(boxcarIdError, 'This Boxcar ID already exists in the system');
         return;
@@ -129,10 +136,7 @@ resetForm();
 
 document.addEventListener('DOMContentLoaded', function() {
     ['#divB', '#divC', '#divD', '#divE', '#divF', '#divG'].forEach(id => {
-        const div = $(id);
-        if (div) {
-            div.style.display = 'none';
-        }
+        $(id).style.display = 'none';
     });
     $$('.radio').forEach(radio => {
         radio.addEventListener('change', handleRadioChange);
@@ -163,15 +167,27 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#selected-description').addEventListener('input', validateDescription);
     $('#selected-cargo-weight').addEventListener('input', validateCargoWeight);
     $('#advance-day').addEventListener('click', advanceDay);
+    $('#selected-cargo-weight').addEventListener('focus', () => {
+        hideError(exceedsMaxWeight);
+    });
+    $('#system-summary').addEventListener('click', function() {
+        if (this.checked) {
+            var form = document.createElement('form');
+            form.method = 'GET';
+            form.action = 'summary.html';
+            document.body.appendChild(form);
+            form.submit();
+        }
+    })
 });
+
+function hideError(errorElement) {
+    errorElement.style.display = 'none';
+}
 
 function handleRadioChange() {
     ['#divA', '#divB', '#divC', '#divD', '#divE', '#divF', '#divG'].forEach(id => {
-        const div = $(id);
-        if (div) {
-            div.style.display = 'none';
-            div.setAttribute('aria-hidden', 'true');
-        }
+        $(id).style.display = 'none';
     });
 
     const divMapping = {
@@ -184,15 +200,8 @@ function handleRadioChange() {
     };
 
     const selectedDivId = divMapping[this.id];
-    if (selectedDivId) {
-        const divToShow = $(selectedDivId);
-        if (divToShow) {
-            divToShow.style.display = 'block';
-            divToShow.setAttribute('aria-hidden', 'false');
-        } else {
-            console.error('No div found for ID:', selectedDivId);
-        }
-    }
+    $(selectedDivId).style.display = 'block';
+        
 }
 
 function handleReturnToMain() {
@@ -200,7 +209,6 @@ function handleReturnToMain() {
         const div = $(id);
         if (div) {
             div.style.display = 'none';
-            div.setAttribute('aria-hidden', 'true');
             resetForm();
             resetAnimation();
         }
@@ -209,7 +217,6 @@ function handleReturnToMain() {
     const divA = $('#divA');
     if (divA) {
         divA.style.display = 'block';
-        divA.setAttribute('aria-hidden', 'false');
         $$('input[type="radio"][name="operation"]').forEach(radio => radio.checked = false);
     } else {
         console.error('divA not found');
@@ -228,18 +235,9 @@ function handleReturnToDivD() {
 }
 
 function addBoxCar() {
-    const errors = [
-        { element: boxcarIdError, message: boxcarIdError.textContent },
-        { element: tareWeightError, message: tareWeightError.textContent },
-        { element: maxGrossWeightError, message: maxGrossWeightError.textContent }
-    ];
-
-    const errorMessage = errors
-        .filter(error => error.element.style.display !== 'none')
-        .map(error => error.message)
-        .join('\n');
-
-    if (errorMessage) {
+    if (boxcarIdError.style.display !== 'none' ||
+        maxGrossWeightError.style.display !== 'none' ||
+        tareWeightError.style.display !== 'none') {
         return;
     } else {
         const newBoxcar = new Boxcar(
@@ -291,6 +289,7 @@ function updateTotalWeight() {
     const totalWeightCell = $('#total-weight');
     let totalCargoWeight = boxcars.reduce((sum, boxcar) => sum + parseFloat(boxcar.cargoWeight), 0);
     totalWeightCell.textContent = totalCargoWeight.toFixed(2);
+    setCookie('totalWeightInBoxcars', totalCargoWeight.toFixed(2), 1);
 }
 
 function createFreightListing() {
@@ -336,8 +335,11 @@ function displayBoxCarFreightInfo(boxCarValue) {
 function validateTransportId() {
     const transportIdInput = ($('#selected-transport-id').value);
     const regex = /^[A-Z]{3}\d{4}S0[1-4]$/;
+    const exists = freights.some(freight => freight.transportId === transportIdInput);
     if (!regex.test(transportIdInput)) {
         showError(selectedTransportIdError, 'Transport ID must be 3 capital letters followed by 4 digit, an S and [01-04])\n EX.TXL2031S02');
+    } else if (exists) {
+        showError(selectedTransportIdError, 'This Transport ID already exists in the system');
     } else {
         hideError(selectedTransportIdError);
     }
@@ -409,19 +411,9 @@ function resetFreightForm(resetBoxcarId = true) {
 }
 
 function processFreight() {
-    const errors = [
-        { element: selectedTransportIdError, message: selectedTransportIdError.textContent },
-        { element: selectedDescriptionError, message: selectedDescriptionError.textContent },
-        { element: selectedCargoWeightError, message: selectedCargoWeightError.textContent }
-    ];
-
-    const errorMessage = errors
-        .filter(error => error.element.style.display !== 'none')
-        .map(error => error.message)
-        .join('\n');
-
-    if (errorMessage) {
-        console.error(errorMessage);
+    if (selectedTransportIdError.style.display !== 'none' ||
+        selectedDescriptionError.style.display !== 'none' ||
+        selectedCargoWeightError.style.display !== 'none') {
         return;
     } else {
         const selectedBoxcarId = $('#selected-boxcar-id').value;
@@ -436,7 +428,6 @@ function processFreight() {
             }
         });
 
-        // Calculate the total loaded weight for the selected boxcar ID
         const totalLoadedWeight = freights.reduce((total, freight) => {
             return freight.boxcarId === selectedBoxcarId ? total + freight.cargoWeight : total;
         }, 0);
@@ -444,9 +435,9 @@ function processFreight() {
         const remainingWeight = maxGrossWeight - totalLoadedWeight - tareWeight;
 
         if (cargoWeight > remainingWeight) {
-            const freight = new Freight($('#selected-transport-id').value, $('#selected-description').value, cargoWeight, 'Warehouse');
+            const freight = new Freight($('#selected-transport-id').value, $('#selected-description').value, cargoWeight, 'Warehouse 1');
             const warehouse = new Warehouse($('#selected-transport-id').value, $('#selected-description').value, cargoWeight);
-            resetFreightForm(false);
+            resetFreightForm(false); 
             freights.push(freight);
             warehouses.push(warehouse);
             createFreightTable(freights);
@@ -489,8 +480,14 @@ function calculateTotalLoadedWeight(boxcarId) {
 
 
 function populateBoxcarManifest(boxcarId) {
-    const manifestTable = document.querySelector('#boxcar-manifest tbody');
     const manifestContainer = document.querySelector('#boxcar-manifest');
+
+    let manifestTable = document.querySelector('#boxcar-manifest tbody');
+    if (manifestTable) {
+        manifestTable.remove();
+    }
+    manifestTable = document.createElement('tbody');
+    manifestContainer.appendChild(manifestTable);
 
     let titleElement = document.querySelector('#manifest-title');
     if (!titleElement) {
@@ -499,10 +496,6 @@ function populateBoxcarManifest(boxcarId) {
         manifestContainer.parentNode.insertBefore(titleElement, manifestContainer);
     }
     titleElement.textContent = `CNA - Box Car ${boxcarId} Manifest`;
-
-    while (manifestTable.firstChild) {
-        manifestTable.removeChild(manifestTable.firstChild);
-    }
 
     freights.filter(freight => freight.boxcarId === boxcarId).forEach(freight => {
         const row = document.createElement('tr');
@@ -524,16 +517,19 @@ function populateBoxcarManifest(boxcarId) {
 }
 
 function createFreightTable(freights) {
-    const tbody = $('#all-freight-table tbody');
-    const titleElement = $('#freight-table-title');
+    const freightTable = document.querySelector('#all-freight-table');
 
-    const selectedBoxcarId = $('#selected-boxcar-id').value;
+    let tbody = freightTable.querySelector('tbody');
+    if (tbody) {
+        tbody.remove();
+    }
+    tbody = document.createElement('tbody');
+    freightTable.appendChild(tbody);
+
+    const titleElement = document.querySelector('#freight-table-title');
+    const selectedBoxcarId = document.querySelector('#selected-boxcar-id').value;
     if (titleElement) {
         titleElement.textContent = `CNA - Box Car ${selectedBoxcarId} Manifest`;
-    }
-
-    while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
     }
 
     freights.forEach(freight => {
@@ -558,12 +554,12 @@ function createFreightTable(freights) {
 }
 
 function updateTotalFreightWeight() {
-    const totalFreightWeightCell = $('#total-freight-weight');
-    const totalCargoWeightCell = $('#total-cargo-weight');
-    const selectedBoxcarId = $('#selected-boxcar-id').value;
+    const totalFreightWeightCell = document.querySelector('#total-freight-weight');
+    const totalCargoWeightCell = document.querySelector('#total-cargo-weight');
+    const selectedBoxcarId = document.querySelector('#selected-boxcar-id').value;
 
     let totalFreightWeight = freights.reduce((total, freight) => {
-        return  total + freight.cargoWeight;
+        return total + freight.cargoWeight;
     }, 0);
 
     let totalCargoWeight = freights.reduce((total, freight) => {
@@ -575,52 +571,190 @@ function updateTotalFreightWeight() {
 }
 
 
+let lastDayValue = null;
+let dayTotalWeight = 0;
 
 function createWarehouseTable(warehouses) {
-    const tbody = $('#warehouse-manifest tbody');
+    const tablesContainer = $('#tables-container');
+    const dayCounter = $('#day-counter');
+    const dayValue = parseInt(dayCounter.value, 10);
+    let grandTotalContainer = $('#grand-total-container');
 
-    while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
+    if (dayValue !== lastDayValue) {
+        dayTotalWeight = 0;
+    }
+    lastDayValue = dayValue;
+
+    if (!grandTotalContainer) {
+        grandTotalContainer = document.createElement('div');
+        grandTotalContainer.id = 'grand-total-container';
+        grandTotalContainer.textContent = 'Total cargo weight all stations: 0 kg';
+        tablesContainer.appendChild(grandTotalContainer);
+    }
+
+    let table = $(`table[data-day="${dayValue}"]`);
+    let tbody, tfoot;
+
+    if (!table) {
+        const dayLabel = document.createElement('h2');
+        dayLabel.textContent = `CNA Warehouse Manifest Station S${dayValue}`;
+        tablesContainer.appendChild(dayLabel);
+
+        table = document.createElement('table');
+        table.className = 'warehouse-table';
+        table.setAttribute('data-day', dayValue);
+
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        ['Transport ID', 'Description', 'Cargo Weight'].forEach(headerText => {
+            const header = document.createElement('th');
+            header.textContent = headerText;
+            headerRow.appendChild(header);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+
+        tfoot = document.createElement('tfoot');
+        const totalRow = document.createElement('tr');
+        totalRow.className = 'day-total-row';
+
+        const totalLabelCell = document.createElement('td');
+        totalLabelCell.setAttribute('colspan', '2');
+        totalLabelCell.textContent = 'Day Total Weight:';
+        totalRow.appendChild(totalLabelCell);
+
+        const weightCell = document.createElement('td');
+        weightCell.textContent = '0.00';
+        totalRow.appendChild(weightCell);
+
+        tfoot.appendChild(totalRow);
+        table.appendChild(tfoot);
+
+        tablesContainer.appendChild(table);
+    } else {
+        tbody = table.querySelector('tbody');
+        tfoot = table.querySelector('tfoot');
     }
 
     warehouses.forEach(warehouse => {
-        const row = document.createElement('tr');
-        const values = [
-            warehouse.transportId,
-            warehouse.description,
-            warehouse.cargoWeight.toFixed(2),
-        ];
+        if (warehouse.boxcarId === 'Warehouse 1') {
+            return;
+        }
 
-        values.forEach(value => {
-            const cell = document.createElement('td');
-            cell.textContent = value;
-            row.appendChild(cell);
-        });
+        let exists = false;
+        const rows = tbody.querySelectorAll('tr');
+        for (let row of rows) {
+            if (row.cells[0].textContent === warehouse.transportId) {
+                exists = true;
+                break;
+            }
+        }
 
-        tbody.appendChild(row);
+        if (!exists) {
+            const row = document.createElement('tr');
+            const values = [warehouse.transportId, warehouse.description, warehouse.cargoWeight.toFixed(2)];
+            values.forEach(value => {
+                const cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+            tbody.appendChild(row);
+            dayTotalWeight += warehouse.cargoWeight;
+
+            reduceBoxcarCargoWeight(warehouse.transportId, warehouse.cargoWeight, dayValue);
+        }
     });
 
-    updateTotalWarehouseWeight();
+    const totalWeightCell = tfoot.querySelector('.day-total-row td:last-child');
+    totalWeightCell.textContent = dayTotalWeight.toFixed(2);
+    updateGrandTotalWeight();
+    createBoxCarTable();
+    createFreightTable(freights);
 }
 
+function updateGrandTotalWeight() {
+    let totalWeightAllStations = 0;
+    const cells = $$('.day-total-row td:last-child');
 
-function updateTotalWarehouseWeight() {
-    const totalWarehouseWeightCell = $('#total-warehouse-weight');
-    if (!totalWarehouseWeightCell) {
-        console.error("Total Warehouse weight element not found");
-        return;
-    }
+    cells.forEach(cell => {
+        totalWeightAllStations += parseFloat(cell.textContent || '0');
+    });
 
-    let totalWarehouseWeight = warehouses.reduce((total, warehouse) => total + warehouse.cargoWeight, 0);
-    totalWarehouseWeightCell.textContent = totalWarehouseWeight.toFixed(2);
-    $('#divF').style.display = 'block';
+    const grandTotalContainer = $('#grand-total-container');
+    grandTotalContainer.textContent = `Total cargo weight all stations: ${totalWeightAllStations.toFixed(2)} kg`;
+    setCookie('totalWeightInWarehouses', totalWeightAllStations.toFixed(2), 1);
 }
 
 function advanceDay() {
-    var dayValue = parseInt($('#day-counter').value); 
-    dayValue += 1;
-    $('#day-counter').value = dayValue
+    var dayCounter = $('#day-counter');
+    var dayValue = parseInt(dayCounter.value, 10);
+    dayValue += 1; 
+    dayCounter.value = dayValue.toString();
+
+    let currentDayWarehouses = freights.filter(freight => {
+        let transportIdLastDigit = freight.transportId.slice(-1);
+        return parseInt(transportIdLastDigit) === dayValue;
+    });
+
+    if (currentDayWarehouses.length > 0) {
+        createWarehouseTable(currentDayWarehouses, dayValue);
+    }
+
+    if (dayValue == 4) {
+        $("#system-summary").disabled = false;
+    }
+    $("#create-boxcar").disabled = true;
+    $("#add-freight").disabled = true;
+    $("#return-to-DivB").style.display = 'none';
+    $("#divF .return-to-divD").style.display = 'none'
 }
+
+function reduceBoxcarCargoWeight(transportId, cargoWeight, dayValue) {
+    const freight = freights.find(f => f.transportId === transportId);
+    if (!freight || freight.boxcarId.startsWith('Warehouse')) {
+        return;
+    }
+
+    const boxcar = boxcars.find(b => b.id === freight.boxcarId);
+    if (boxcar) {
+        boxcar.cargoWeight -= cargoWeight;
+        boxcar.grossWeight = boxcar.tareWeight + boxcar.cargoWeight;
+        freight.boxcarId = 'Warehouse ' + dayValue;
+    } else {
+        console.error('Boxcar not found for ID:', freight.boxcarId);
+    }
+}
+
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = `${cname}=${cvalue};${expires};path=/`;
+    console.log(`Cookie set: ${document.cookie}`);
+    console.log(`Cookie retrieved immediately after setting: ${cname}=${getCookie(cname)}`);
+}
+
+
+function getCookie(cname) {
+    const name = cname + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    console.log(`Decoded cookies: ${ca}`);
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();  // Trim spaces from the start of the cookie
+        if (c.indexOf(name) === 0) {
+            const value = c.substring(name.length, c.length);
+            console.log(`Cookie retrieved: ${cname}=${value}`);
+            return value;
+        }
+    }
+    console.log(`Cookie not found: ${cname}`);
+    return "";
+}
+
 
 
 // ----------------------------------Something for fun------------------------------------------------ //
@@ -652,5 +786,4 @@ function resetAnimation() {
     elem.style.left = pos + 'px';
     clearInterval(id);
 }
-
 // ----------------------------------Something for fun------------------------------------------------ //

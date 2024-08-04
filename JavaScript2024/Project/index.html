@@ -18,6 +18,7 @@
             <label><input type="radio" name="operation" class="radio" id="boxcar-data"> Boxcar Data</label>
             <label><input type="radio" name="operation" class="radio" id="warehouse-data"> Warehouse Data</label>
             <label><input type="radio" name="operation" class="radio" id="all-freight-status"> All Freight Status</label>
+            <label><input type="radio" name="operation" class="radio" id="system-summary" disabled> System Summary</label>
         </div>
     </div>
     
@@ -105,8 +106,7 @@
                     <th>Description</th>
                     <th>Weight</th>
                 </tr>
-            </thead>
-            <tbody></tbody>    
+            </thead> 
             <tfoot>
                 <tr>
                     <td colspan="2">Total Cargo Weight:</td>
@@ -119,26 +119,15 @@
     </div>
     
     <div id="divF">
-        <h1>CNA - Warehouse Manifest - Station AAAA</h1>
-        <table id="warehouse-manifest">
-            <thead>
-                <tr>
-                    <th>Transport ID</th>
-                    <th>Description</th>
-                    <th>Weight</th>
-                </tr>
-            </thead> 
-            <tbody></tbody>   
-            <tfoot>
-                <tr>
-                    <td colspan="2">Total Cargo Weight:</td>
-                    <td id="total-warehouse-weight">0</td>
-                </tr>
-            </tfoot>
-        </table>
-        <input type="button" value="Return to Add Freight" class="return-to-divD">
-        <input type="button" value="Return to Main Page" class="return-to-main">
+        <h1>CNA - Warehouse Manifest</h1>
+        <div id="tables-container">
+        </div>
+        <div class="buttons-container">
+            <input type="button" value="Return to Add Freight" class="return-to-divD">
+            <input type="button" value="Return to Main Page" class="return-to-main">
+        </div>
     </div>
+    
     
     <div id="divG">
         <h1>CNA - Complete Freight Status</h1>
@@ -151,7 +140,6 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody></tbody>
             <tfoot>
                 <tr>
                     <td colspan="3">Total Cargo Weight:</td>
