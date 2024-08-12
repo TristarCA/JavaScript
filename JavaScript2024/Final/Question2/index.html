@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Problem 02 - Train Station</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border: 2px solid black;
+            text-align: center;
+            width: 300px;
+        }
+        .container input[type="radio"] {
+            margin: 10px;
+        }
+        .container input[type="submit"] {
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>TRAIN</h3>
+        <form id="trainForm">
+            <p>Location</p>
+            <input type="radio" name="location" value="St. John's" required> St. John's<br>
+            <input type="radio" name="location" value="Gander" required> Gander<br>
+            <input type="radio" name="location" value="Corner Brook" required> Corner Brook<br>
+            
+            <p>Speed</p>
+            <input type="radio" name="speed" value="Stopped" required> Stopped<br>
+            <input type="radio" name="speed" value="Slow" required> Slow<br>
+            <input type="radio" name="speed" value="Fast" required> Fast<br>
+            
+            <input type="submit" value="Send Data to Station">
+        </form>
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Problem 03 - Inventory Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border: 2px solid black;
+            text-align: center;
+            width: 300px;
+        }
+        .container div {
+            margin: 10px 0;
+        }
+        .container input[type="button"] {
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>TRAIN</h3>
+        <div id="inventory">
+            <p>Bars: $2.95</p>
+            <p>Chips: $3.95</p>
+            <p>Cookies: $5.95</p>
+            <p>Batteries: $9.95</p>
+            <p>Detergent: $12.95</p>
+        </div>
+        <input type="button" id="calculateButton" value="Calculate Total">
+        <div id="totalAmount">$0.00</div>
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

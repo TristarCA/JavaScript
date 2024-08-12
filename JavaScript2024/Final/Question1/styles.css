@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border: 2px solid black;
+    text-align: center;
+    width: 300px;
+}
+
+.container input[type="text"] {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    width: 80%;
+}
+
+.container input[type="submit"] {
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.message {
+    margin-top: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+    display: none;
+}
